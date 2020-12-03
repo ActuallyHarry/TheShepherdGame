@@ -7,7 +7,7 @@ public class TileObject : MonoBehaviour
 {
     public Tile thisTile;
 
-    public int code;
+    public int[] code;
     public Exit[] exits;
 
 

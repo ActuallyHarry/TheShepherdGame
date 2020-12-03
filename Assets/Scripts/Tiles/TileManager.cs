@@ -124,7 +124,7 @@ public class TileManager : MonoBehaviour
         {
             Tile tile = activatingTiles.Dequeue();
             tile.tileObject.activating = true;
-            Debug.Log(activatingTiles.Count);
+            //Debug.Log(activatingTiles.Count);
         }     
     }
 

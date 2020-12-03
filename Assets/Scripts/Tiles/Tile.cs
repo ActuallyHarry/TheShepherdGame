@@ -7,7 +7,7 @@ public class Tile
     public TileObject tileObject;
     public TileManager tm;
 
-    public int tileCode;
+    public int[] tileCode;
     public List<Tile> neighbors = new List<Tile>();
     public Coord position;
     public int region;
@@ -18,7 +18,7 @@ public class Tile
     {
 
     }
-    public Tile(int _tileCode, Coord _position, TileManager _tm)
+    public Tile(int[] _tileCode, Coord _position, TileManager _tm)
     {
         tm = _tm;
         tileCode = _tileCode;

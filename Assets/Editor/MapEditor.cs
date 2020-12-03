@@ -23,7 +23,7 @@ public class MapEditor :Editor
                     
                     Handles.color = Color.white;
                     
-                    int[] i = Converter.CodeToBinary(map[x, y].tileCode);
+                    int[] i = map[x, y].tileCode;
                   
                     if (i[0] == 1)
                     {

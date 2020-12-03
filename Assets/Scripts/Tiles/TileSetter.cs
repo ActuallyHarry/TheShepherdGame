@@ -37,34 +37,48 @@ public class TileSetter : MonoBehaviour
     void AttachTile(Tile tile, int tileScale, Transform parent)
     {
         GameObject t = null;
-        TileObject to = null;       
-        if (tile.tileCode == 1 || tile.tileCode == 2 || tile.tileCode == 4 || tile.tileCode == 8)
+        TileObject to = null;
+        int numOFExits = 0;
+        bool hasAdjacentExit = false;
+        for (int i = 0; i < tile.tileCode.Length; i++)
+        {
+            if(tile.tileCode[i] == 1)
+            {
+                numOFExits++;
+            }
+
+            if (!hasAdjacentExit && i != 0 && ((tile.tileCode[i] == 1 && tile.tileCode[i - 1] == 1) || (tile.tileCode[0] == 1 && tile.tileCode[3] == 1))) 
+            {
+                hasAdjacentExit = true;
+            }
+        }
+        Debug.Log(tile.tileCode[0].ToString() + tile.tileCode[1].ToString() + tile.tileCode[2].ToString() + tile.tileCode[3].ToString() + " " + numOFExits.ToString() + hasAdjacentExit);
+        if(numOFExits == 1) //single
         {
             t = Instantiate(TileManager.SINGLE[Random.Range(0, TileManager.SINGLE.Count)].gameObject, parent);
-            to = t.GetComponent<TileObject>();         
+            to = t.GetComponent<TileObject>();    
         }
-        else if (tile.tileCode == 5 || tile.tileCode == 10)
+        if (numOFExits == 2 && !hasAdjacentExit) //straight
         {
             t = Instantiate(TileManager.STRAIGHT[Random.Range(0, TileManager.STRAIGHT.Count)].gameObject, parent);
-            to = t.GetComponent<TileObject>();          
+            to = t.GetComponent<TileObject>(); 
         }
-        else if (tile.tileCode == 11 || tile.tileCode == 7 || tile.tileCode == 13 || tile.tileCode == 14)
+        if (numOFExits == 2 && hasAdjacentExit) //cornor
+        {
+            t = Instantiate(TileManager.CORNER[Random.Range(0, TileManager.CORNER.Count)].gameObject, parent);
+            to = t.GetComponent<TileObject>();  
+        }
+        if (numOFExits == 3) //tjunction
         {
             t = Instantiate(TileManager.JUNCTION[Random.Range(0, TileManager.JUNCTION.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>();
         }
-        else if (tile.tileCode == 3 || tile.tileCode == 6 || tile.tileCode == 12 || tile.tileCode == 9)
+        if(numOFExits == 4) //allway
         {
-            t = Instantiate(TileManager.CORNER[Random.Range(0, TileManager.CORNER.Count)].gameObject, parent);
-            to = t.GetComponent<TileObject>();                
-            
-        }
-        else if (tile.tileCode == 15)
-        {
-             t = Instantiate(TileManager.ALL[Random.Range(0, TileManager.ALL.Count)].gameObject,parent);
-            to = t.GetComponent<TileObject>();            
-        }
-        
+            t = Instantiate(TileManager.ALL[Random.Range(0, TileManager.ALL.Count)].gameObject, parent);
+            to = t.GetComponent<TileObject>(); 
+        }        
+
         PositionTile(t, tile.position, tileScale);       
         to = OrientTile(to.code, tile.tileCode, to);
         to.thisTile = tile;
@@ -77,107 +91,51 @@ public class TileSetter : MonoBehaviour
         g.transform.position = new Vector3(pos.tileX * tileScale, 0, pos.tileY * tileScale);
     }
 
-    TileObject OrientTile(int defaultCode, int toCode, TileObject t) // bad implementation can only handle specific to and froms
+    TileObject OrientTile(int[] defaultCode, int[] toCode, TileObject t) 
     {
-        switch (defaultCode)
+        
+        //to code will always be a rotation of the default code
+        for (int i = 0; i < 4; i++)
         {
-            case 8:
-                if (toCode == 8)
+            bool correctOrientation = true;
+            for (int j = 0; j < defaultCode.Length; j++)
+            {
+                if(defaultCode[j] != toCode[j])
                 {
-                    return t;
-                }
-                else if (toCode == 4)
-                {
-                    t = ReassignExitsAndRotate(1, t);
-                    t.code = 4;
-                }
-                else if (toCode == 2)
-                {
-                    t = ReassignExitsAndRotate(2, t);
-                    t.code = 2;
-                }
-                else if (toCode == 1)
-                {
-                    t = ReassignExitsAndRotate(3, t);
-                    t.code = 1;
-                }
+                    // wow this is a bit shit hope it isnt longer than 4
+                    correctOrientation = false;
+                    int tmp = defaultCode[0];
+                    defaultCode[0] = defaultCode[3];
+                    defaultCode[3] = defaultCode[2];
+                    defaultCode[2] = defaultCode[1];
+                    defaultCode[1] = tmp;
+                    t = ReassignExitsAndRotate(t);
+                    break;
+                }                
+            }
+
+            if (correctOrientation)
+            {
                 break;
-            case 10:
-                if (toCode == 10)
-                {
-                    return t;
-                }
-                else if (toCode == 5)
-                {
-                    t = ReassignExitsAndRotate(1, t);
-                    t.code = 5;
-                }
-                break;
-            case 12:
-                if (toCode == 12)
-                {
-                    return t;
-                }
-                else if (toCode == 6)
-                {
-                    t = ReassignExitsAndRotate(1, t);
-                    t.code = 6;
-                }
-                else if (toCode == 3)
-                {
-                    t = ReassignExitsAndRotate(2, t);
-                    t.code = 3;
-                }
-                else if (toCode == 9)
-                {
-                    t = ReassignExitsAndRotate(3, t);
-                    t.code = 9;
-                }
-                break;
-            case 14:
-                if (toCode == 14)
-                {
-                    return t;
-                }
-                else if (toCode == 7)
-                {
-                    t = ReassignExitsAndRotate(1, t);
-                    t.code = 7;
-                }
-                else if (toCode == 11)
-                {
-                    t = ReassignExitsAndRotate(2, t);
-                    t.code = 11;
-                }
-                else if (toCode == 13)
-                {
-                   t = ReassignExitsAndRotate(3, t);
-                    t.code = 13;
-                }
-                break;
-            case 15:
-                return t;
-            default:
-                Debug.LogError("Not A defaultCode");
-                break;
+            }
+           
+
+           
         }
 
         return t;
     }
 
-    TileObject ReassignExitsAndRotate(int numOfRotations, TileObject t)
+    TileObject ReassignExitsAndRotate(TileObject t)
     {
-        Vector3 euler = new Vector3(0, -90 * numOfRotations, 0);
-        t.asset.transform.Rotate(euler);
-        for (int i = 0; i < numOfRotations; i++)
-        {
-            Exit temp = t.exits[0];
-            t.exits[0] = t.exits[3];
-            t.exits[3] = t.exits[2];
-            t.exits[2] = t.exits[1];
-            t.exits[1] = temp;
-        }
-
+        //same shitness
+        Vector3 euler = new Vector3(0, -90, 0);
+        t.asset.transform.Rotate(euler);       
+        Exit temp = t.exits[0];
+        t.exits[0] = t.exits[3];
+        t.exits[3] = t.exits[2];
+        t.exits[2] = t.exits[1];
+        t.exits[1] = temp;
         return t;
 
     }

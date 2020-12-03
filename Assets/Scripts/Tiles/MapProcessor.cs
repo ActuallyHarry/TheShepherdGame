@@ -127,8 +127,8 @@ public class MapProcessor
 
     void CreateConnection(Area aA, Area aB, Coord cA, Coord cB, Tile[,] map)
     {
-        int codeA = map[cA.tileX, cA.tileY].tileCode;
-        int codeB = map[cB.tileX, cB.tileY].tileCode;
+        int[] codeA = map[cA.tileX, cA.tileY].tileCode;
+        int[] codeB = map[cB.tileX, cB.tileY].tileCode;
         if (cA.tileX == cB.tileX + 1 && cA.tileY == cB.tileY) // b is left of a
         {
             codeA = AlterTileCode(codeA, 2);
@@ -160,11 +160,10 @@ public class MapProcessor
         tB.AddNeighbors(tA);
     }
 
-    int AlterTileCode(int code, int sideOfNewExit) // may ned testing due to mgen binary totile code
-    {
-        int[] binary = Converter.CodeToBinary(code);
-        binary[sideOfNewExit] = 1;
-        return Converter.BinaryToTileCode(binary);
+    int[] AlterTileCode(int[] code, int sideOfNewExit) // may ned testing due to mgen binary totile code
+    {        
+        code[sideOfNewExit] = 1;
+        return code;
     }
 
     public MapProcessor()
