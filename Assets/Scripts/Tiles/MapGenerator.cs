@@ -39,7 +39,8 @@ public class MapGenerator : MonoBehaviour
         
         Tile[,] unprocessedTiles = AssignTiles(codeMap, _tm);
 
-        tileMap = mapProcessor.ProcessMap(unprocessedTiles); // after tiles are processed codeMap is redunatant/ inaccurate
+        // after tiles are processed codeMap is redunatant/ inaccurate so why the fuck did i do it
+        tileMap = mapProcessor.ProcessMap(unprocessedTiles); 
         codemapCompleted = true;
         return tileMap;
         

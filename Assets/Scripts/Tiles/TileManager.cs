@@ -19,7 +19,7 @@ public class TileManager : MonoBehaviour
     NavMeshSurface navMesh;
 
     public Transform tileParent;
-   // defualts for each type: single: 8, straghit: 10, Corner: 12, Junction: 14, Allway: 15
+   // defualts for each type: 
     public static List<TileObject> ALL = new List<TileObject>();
     public static List<TileObject> JUNCTION = new List<TileObject>();
     public static List<TileObject> STRAIGHT = new List<TileObject>();

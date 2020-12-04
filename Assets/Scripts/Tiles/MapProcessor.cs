@@ -80,7 +80,8 @@ public class MapProcessor
         return coords;
     }
 
-    void ConnectAreas(List<Area> allAreas, Tile[,] map) // sometimes there are adjesenct areas that are not connected but are through other areas this may be a problem but fine for now.
+    // sometimes there are adjesenct areas that are not connected but are through other areas this may be a problem but fine for now.
+    void ConnectAreas(List<Area> allAreas, Tile[,] map) 
     {
         foreach (Area aA in allAreas)
         {
