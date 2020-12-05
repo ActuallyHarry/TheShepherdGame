@@ -52,7 +52,7 @@ public class TileSetter : MonoBehaviour
                 hasAdjacentExit = true;
             }
         }
-        Debug.Log(tile.tileCode[0].ToString() + tile.tileCode[1].ToString() + tile.tileCode[2].ToString() + tile.tileCode[3].ToString() + " " + numOFExits.ToString() + hasAdjacentExit);
+        //Debug.Log(tile.tileCode[0].ToString() + tile.tileCode[1].ToString() + tile.tileCode[2].ToString() + tile.tileCode[3].ToString() + " " + numOFExits.ToString() + hasAdjacentExit);
         if(numOFExits == 1) //single
         {
             t = Instantiate(TileManager.SINGLE[Random.Range(0, TileManager.SINGLE.Count)].gameObject, parent);

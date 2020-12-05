@@ -90,6 +90,7 @@ public class TileManager : MonoBehaviour
                 }
                 if (focusTile.tileObject.exits[i].exiting)
                 {
+                Destroy(focusTile.tileObject.exits[i]);
                     switch (i)
                     {
                         case 0:

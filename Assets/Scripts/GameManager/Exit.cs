@@ -8,7 +8,7 @@ public class Exit : MonoBehaviour
 
 
     private void OnTriggerEnter(Collider other)
-    {
+    {       
         if (other.tag == "Player")
         {
             exiting = true;
