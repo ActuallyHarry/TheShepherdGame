@@ -53,7 +53,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = 0; y < tiles.GetLength(1); y++)
             {
-                tiles[x, y] = new Tile(GetCode3D(tileCodeMap, x, y), new Coord(x,y), _tm);
+                tiles[x, y] = new Tile(GetCode3D(tileCodeMap, x, y), new Coord(x,y));
             }
         }
 

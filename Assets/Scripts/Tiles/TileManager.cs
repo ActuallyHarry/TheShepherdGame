@@ -16,8 +16,6 @@ public class TileManager : MonoBehaviour
     Tile focusTile; // this is the tile that the player is on.
     Tile previousFocusTile;
 
-    NavMeshSurface navMesh;
-
     public Transform tileParent;
    // defualts for each type: 
     public static List<TileObject> ALL = new List<TileObject>();
@@ -65,7 +63,6 @@ public class TileManager : MonoBehaviour
 
     void Start()
     {
-        navMesh = GetComponent<NavMeshSurface>();
         mapGen = GetComponent<MapGenerator>();
         tileSet = GetComponent<TileSetter>();
         MakeMap();
@@ -129,10 +126,8 @@ public class TileManager : MonoBehaviour
         }     
     }
 
-    public void UpdateNavMesh()
-    {
-       navMesh.BuildNavMesh();
-    }
+
+
 
     void MakeMap()
     {        
@@ -161,7 +156,7 @@ public class TileManager : MonoBehaviour
         tileMap[0, 0].tileObject.gameObject.SetActive(true);
         tileMap[0, 0].tileObject.activateTime = 0;
         tileMap[0, 0].tileObject.activating = true;
-        navMesh.BuildNavMesh();
+      
     }
 
     

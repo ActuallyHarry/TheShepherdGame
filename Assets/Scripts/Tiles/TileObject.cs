@@ -9,7 +9,7 @@ public class TileObject : MonoBehaviour
 
     public int[] code;
     public Exit[] exits;
-
+    public GameObject[] navMeshData;
 
     public GameObject asset; // this is the thing that actually moves
     public Transform inacitvePos;
@@ -36,7 +36,7 @@ public class TileObject : MonoBehaviour
                 asset.transform.position = activePos.position;
                 active = true;
                 activating = false;
-                thisTile.tm.UpdateNavMesh();
+             
 
 
             }

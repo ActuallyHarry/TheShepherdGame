@@ -5,7 +5,6 @@ using UnityEngine;
 public class Tile 
 {
     public TileObject tileObject;
-    public TileManager tm;
 
     public int[] tileCode;
     public List<Tile> neighbors = new List<Tile>();
@@ -18,9 +17,9 @@ public class Tile
     {
 
     }
-    public Tile(int[] _tileCode, Coord _position, TileManager _tm)
+    public Tile(int[] _tileCode, Coord _position)
     {
-        tm = _tm;
+   
         tileCode = _tileCode;
         position = _position;
     }
