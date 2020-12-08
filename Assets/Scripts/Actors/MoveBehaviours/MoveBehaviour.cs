@@ -6,6 +6,6 @@ public abstract class MoveBehaviour : ScriptableObject
 {
     public abstract Vector3 CalculateMove(Actor actor);
 
-    public abstract void ResetValues();
+    public abstract void ResetValues(Actor actor);
 }
    

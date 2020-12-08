@@ -130,7 +130,8 @@ public class TileSetter : MonoBehaviour
     {
         //same shitness
         Vector3 euler = new Vector3(0, -90, 0);
-        t.asset.transform.Rotate(euler);       
+        t.asset.transform.Rotate(euler);
+        t.transform.GetChild(2).Rotate(euler);
         Exit temp = t.exits[0];
         t.exits[0] = t.exits[3];
         t.exits[3] = t.exits[2];

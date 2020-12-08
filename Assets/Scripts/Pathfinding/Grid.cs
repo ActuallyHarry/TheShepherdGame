@@ -9,6 +9,7 @@ public class Grid : MonoBehaviour
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
+    public int blurAmount = 3;
 
     public int ObstacleProximityPenalty = 10;
     public TerrainType[] walkableRegions;
@@ -83,7 +84,7 @@ public class Grid : MonoBehaviour
             }
         }
 
-        BlurPenaltyMap(3);
+        BlurPenaltyMap(blurAmount);
     }
 
     void BlurPenaltyMap(int blurSize)

@@ -33,12 +33,13 @@ public class Actor : MonoBehaviour
     public void Begin()
     {
         
-        movB.ResetValues();
+        movB.ResetValues(this);
 
         if(interest == null)
         {
             interest = transform;
         }
+        
         target = interest.position;
         StartCoroutine(UpdatePath());
 
@@ -54,8 +55,8 @@ public class Actor : MonoBehaviour
 
 
         target = pos;
+
         
-      
     }
 
 
@@ -86,16 +87,18 @@ public class Actor : MonoBehaviour
 
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) // when the path is made starts couritine to follow the path.
     {
+       
         if (pathSuccessful)
         {
             path = new Path(waypoints, transform.position, turnDist, stoppingDistance);
-            StopCoroutine("FollowPath");
-            StartCoroutine("FollowPath");
+            StopCoroutine(FollowPath());
+            StartCoroutine(FollowPath());
         }
     }
 
     IEnumerator UpdatePath()
     {
+       
         if (Time.timeSinceLevelLoad < .3f)
         {
             yield return new WaitForSeconds(.3f);
@@ -111,8 +114,7 @@ public class Actor : MonoBehaviour
 
             if ((target - targetPosOld).sqrMagnitude > sqrMovethreshold)
             {
-                Debug.Log("path requested");
-                PathRequestManager.RequestPath(new PathRequest(transform.position, target, OnPathFound)); //asks to create a path to the target
+                PathRequestManager.RequestPath(new PathRequest(transform.position, target, OnPathFound));
                 targetPosOld = target;
             }
 

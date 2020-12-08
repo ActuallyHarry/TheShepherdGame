@@ -434,8 +434,9 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
-  gridWorldSize: {x: 320, y: 320}
+  gridWorldSize: {x: 360, y: 360}
   nodeRadius: 0.25
+  blurAmount: 3
   ObstacleProximityPenalty: 100
   walkableRegions:
   - terrainMask:
@@ -606,7 +607,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755634940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 135.32083, y: -6.281574, z: 26.22601}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -677,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: 8
   tileScale: 40
-  tileOffset: 0
+  tileOffset: -4
   player: {fileID: 0}
   tileParent: {fileID: 1755634941}
 --- !u!114 &1914259814

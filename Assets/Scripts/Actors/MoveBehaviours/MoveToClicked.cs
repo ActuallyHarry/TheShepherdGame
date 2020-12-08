@@ -18,15 +18,10 @@ public class MoveToClicked : MoveBehaviour
 
     public MouseButton click = MouseButton.LeftClick;
 
-    public void Awake()
-    {
-       
-        lastClickedLocation = Vector3.zero;
-    }
+ 
 
     public override Vector3 CalculateMove(Actor actor)
     {
-        
         if (Input.GetMouseButtonUp((int)click))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -34,15 +29,16 @@ public class MoveToClicked : MoveBehaviour
 
             if (Physics.Raycast(ray, out hit, clickable ))
             {
-               lastClickedLocation = hit.point;
-                
+                //Debug.Log("click");
+                lastClickedLocation = hit.point;
             }
         }
         return lastClickedLocation;
+        
     }
 
-    public override void ResetValues()
+    public override void ResetValues(Actor actor)
     {
-        lastClickedLocation = Vector3.zero;
+        lastClickedLocation = actor.transform.position;
     }
 }

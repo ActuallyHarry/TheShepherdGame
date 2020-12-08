@@ -12,7 +12,7 @@ public class FollowTargetBehaviour : MoveBehaviour
 
     }
 
-    public override void ResetValues()
+    public override void ResetValues(Actor actor)
     {
         
     }
