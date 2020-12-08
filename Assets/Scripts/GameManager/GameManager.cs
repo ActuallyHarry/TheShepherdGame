@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         tMan.MakeMap();
+        Physics.SyncTransforms();
         navGrid.CreateGrid();
         SetUpPlayer();
     }
