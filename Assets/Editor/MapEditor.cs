@@ -12,7 +12,7 @@ public class MapEditor :Editor
     {
         var mgen = (MapGenerator)target;
 
-        if (Application.isPlaying && mgen.codemapCompleted)
+        if (Application.isPlaying && mgen.codemapCompleted && mgen.showMapDebug)
         {
            
             Tile[,] map = mgen.tileMap;

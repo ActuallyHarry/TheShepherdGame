@@ -12,6 +12,7 @@ public class TileManager : MonoBehaviour
     public int mapSize;
     public int tileScale = 20;
 
+    [HideInInspector]
     public Actor player;
     Tile focusTile; // this is the tile that the player is on.
     Tile previousFocusTile;
@@ -65,12 +66,14 @@ public class TileManager : MonoBehaviour
     {
         mapGen = GetComponent<MapGenerator>();
         tileSet = GetComponent<TileSetter>();
-        MakeMap();
+       
     }
 
     private void Update()
     {
-        focusTile = player.currentTile.GetComponent<TileObject>().thisTile;
+     
+        focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;
+    
         CheckCurrentTile();
         UpdateTiles();
     }
@@ -129,10 +132,10 @@ public class TileManager : MonoBehaviour
 
 
 
-    void MakeMap()
+    public void MakeMap()
     {        
         tileMap = mapGen.GenerateMap(mapSize, this);
-        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileParent);
+        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileParent);       
         HideMap();
         StartMap();
 

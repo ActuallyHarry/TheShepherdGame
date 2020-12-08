@@ -5,11 +5,13 @@ using System;
 
 public class MapGenerator : MonoBehaviour
 {
+    public bool showMapDebug;
     MapProcessor mapProcessor;
     public Tile[,] tileMap;
     public int[,,] codeMap;
     int[,] tileCodes;
 
+    [HideInInspector]
     public bool codemapCompleted = false;
 
     private void Awake()

@@ -8,16 +8,16 @@ public class Shepard : Actor
     public List<ShpdAnimal> animals;
     bool whistle;   
 
-    new void Start()
+    new void Begin()
     {
-        base.Start();
+        base.Begin();
     }
     new void Update()
     {
         base.Update();
         whistle = Input.GetMouseButtonUp(1);
         UpdateAnimals();
-        currentTile = ReturnCurrentTile();
+  
     }
 
     void UpdateAnimals()

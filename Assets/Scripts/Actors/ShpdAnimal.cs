@@ -14,9 +14,9 @@ public class ShpdAnimal : Actor
     float attentionTime;
     float aTimer =0;
 
-    new  void Start()
+    new  void Begin()
     {
-        base.Start();
+        base.Begin();
     }
     new void Update()
     {

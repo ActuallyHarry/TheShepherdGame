@@ -11,8 +11,6 @@ public class Actor : MonoBehaviour
     [HideInInspector]
     public ContextFilter filter = new ContextFilter();
 
-    public Transform currentTile;
-
     [Header("Navigation")]
     public float speed = 8;
     const float minPathUpdateTime = 0.2f;
@@ -32,16 +30,16 @@ public class Actor : MonoBehaviour
     public List<Transform> ItemsInProximity = new List<Transform>();
     public List<Transform> ItemsInView = new List<Transform>();
 
-    public void Start()
+    public void Begin()
     {
-
+        
         movB.ResetValues();
 
         if(interest == null)
         {
             interest = transform;
         }
-
+        target = interest.position;
         StartCoroutine(UpdatePath());
 
     }
@@ -72,8 +70,9 @@ public class Actor : MonoBehaviour
     public Transform ReturnCurrentTile()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 5f, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 5f, LayerMask.GetMask("Ground")))
         {
+            //Debug.Log(hit.transform.parent.parent.name);
             return hit.transform.parent.parent;
         }
         else
@@ -112,6 +111,7 @@ public class Actor : MonoBehaviour
 
             if ((target - targetPosOld).sqrMagnitude > sqrMovethreshold)
             {
+                Debug.Log("path requested");
                 PathRequestManager.RequestPath(new PathRequest(transform.position, target, OnPathFound)); //asks to create a path to the target
                 targetPosOld = target;
             }

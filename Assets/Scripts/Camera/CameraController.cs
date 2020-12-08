@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    [HideInInspector]
     public Actor player;
     public Transform cameraFocus;
     Transform tileTarget;
@@ -17,8 +18,13 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        tileTarget = player.currentTile;
-        transform.position = Vector3.Lerp(transform.position, tileTarget.position, speed);
+       
+        if (player != null)
+        {
+            tileTarget = player.ReturnCurrentTile();
+            transform.position = Vector3.Lerp(transform.position, tileTarget.position, speed);
+        }
+       
     //    float x;
     //    float y;
     //    Vector2 playerPos = player.transform.position;
