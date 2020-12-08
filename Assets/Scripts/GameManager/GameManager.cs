@@ -14,14 +14,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         tMan.MakeMap();
-        Physics.SyncTransforms();
+        Physics.SyncTransforms(); // this is required because the tiles are made in same frame as the nav grid is
         navGrid.CreateGrid();
         SetUpPlayer();
     }
 
     public void SetUpPlayer()
     {      
-        player = Instantiate(playerPrefab, transform).GetComponent<Actor>();
+        player = Instantiate(playerPrefab, new Vector3(tMan.tileOffset*tMan.tileScale,0,tMan.tileOffset*tMan.tileScale), transform.rotation, null).GetComponent<Actor>();
         camCon.player = player;
         tMan.player = player;
         player.Begin();

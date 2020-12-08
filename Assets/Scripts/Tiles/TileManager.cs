@@ -10,7 +10,8 @@ public class TileManager : MonoBehaviour
     TileSetter tileSet;
     Tile[,] tileMap;
     public int mapSize;
-    public int tileScale = 20;
+    public int tileScale = 40;
+    public int tileOffset =-4;
 
     [HideInInspector]
     public Actor player;
@@ -135,7 +136,7 @@ public class TileManager : MonoBehaviour
     public void MakeMap()
     {        
         tileMap = mapGen.GenerateMap(mapSize, this);
-        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileParent);       
+        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent);       
         HideMap();
         StartMap();
 

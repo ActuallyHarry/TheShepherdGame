@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TileSetter : MonoBehaviour
 {
-    public Tile[,] AttachTileObjects(Tile[,] map, int tileScale, Transform parent)
+    public Tile[,] AttachTileObjects(Tile[,] map, int tileScale, int tileOffset, Transform parent)
     {
         for (int x = 0; x < map.GetLength(0); x++)
         {
             for (int y = 0; y < map.GetLength(1); y++)
             {
-                AttachTile(map[x, y], tileScale, parent);
+                AttachTile(map[x, y], tileScale, tileOffset, parent);
 
             }
         }
@@ -34,7 +34,7 @@ public class TileSetter : MonoBehaviour
     //    return map;
     //}
 
-    void AttachTile(Tile tile, int tileScale, Transform parent)
+    void AttachTile(Tile tile, int tileScale, int tileOffset, Transform parent)
     {
         GameObject t = null;
         TileObject to = null;
@@ -79,16 +79,16 @@ public class TileSetter : MonoBehaviour
             to = t.GetComponent<TileObject>(); 
         }        
 
-        PositionTile(t, tile.position, tileScale);       
+        PositionTile(t, tile.position, tileScale, tileOffset);       
         to = OrientTile(to.code, tile.tileCode, to);
         to.thisTile = tile;
         tile.tileObject = to;
 
     }
 
-    void PositionTile(GameObject g, Coord pos, int tileScale)
+    void PositionTile(GameObject g, Coord pos, int tileScale, int tileOffset)
     {
-        g.transform.position = new Vector3(pos.tileX * tileScale, 0, pos.tileY * tileScale);
+        g.transform.position = new Vector3((pos.tileX + tileOffset)* tileScale, 0, (pos.tileY +tileOffset) * tileScale);
     }
 
     TileObject OrientTile(int[] defaultCode, int[] toCode, TileObject t) 

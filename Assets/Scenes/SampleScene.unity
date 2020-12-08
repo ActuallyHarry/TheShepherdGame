@@ -434,9 +434,9 @@ MonoBehaviour:
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
-  gridWorldSize: {x: 40, y: 40}
-  nodeRadius: 0.5
-  ObstacleProximityPenalty: 10
+  gridWorldSize: {x: 320, y: 320}
+  nodeRadius: 0.25
+  ObstacleProximityPenalty: 100
   walkableRegions:
   - terrainMask:
       serializedVersion: 2
@@ -675,9 +675,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf817612be1ea8d4e8e0a9c3537cc203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  navGrid: {fileID: 972183763}
   mapSize: 8
   tileScale: 40
+  tileOffset: 0
   player: {fileID: 0}
   tileParent: {fileID: 1755634941}
 --- !u!114 &1914259814
@@ -733,6 +733,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camCon: {fileID: 1590413222}
+  tMan: {fileID: 1914259813}
+  navGrid: {fileID: 972183763}
   playerPrefab: {fileID: 6021120703833030508, guid: 67a42dca4f4b63a408354e3ed1b0fe4c,
     type: 3}
   player: {fileID: 0}
