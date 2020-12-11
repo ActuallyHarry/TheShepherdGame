@@ -139,9 +139,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2afd30fb67a8a7408a7805e8a6839c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movB: {fileID: 11400000, guid: a40e5858820ea034c8f5fd26066729a0, type: 2}
+  moveBehaviourOptions: []
+  currentMoveBehaviour: {fileID: 11400000, guid: a40e5858820ea034c8f5fd26066729a0,
+    type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
-  currentTile: {fileID: 0}
   speed: 8
   target: {x: 0, y: 0, z: 0}
   turnSpeed: 3
@@ -152,11 +153,7 @@ MonoBehaviour:
   interest: {fileID: 0}
   ItemsInProximity: []
   ItemsInView: []
-  animals:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  animals: []
 --- !u!54 &1031913271
 Rigidbody:
   m_ObjectHideFlags: 0

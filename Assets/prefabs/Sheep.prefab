@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484409497876164525}
-  - component: {fileID: 484409497876164526}
   - component: {fileID: 484409497876164527}
   - component: {fileID: 484409497876164520}
   m_Layer: 0
@@ -34,28 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!195 &484409497876164526
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 484409497876164521}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!135 &484409497876164527
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -81,12 +58,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edccdba6b5797fa4e91c6f7464035a75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movB: {fileID: 11400000, guid: 8ba77bd8dd9747a4ea2f9fab41b341ee, type: 2}
+  interest: {fileID: 0}
+  leader: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+  moveBehaviourOptions: []
+  currentMoveBehaviour: {fileID: 11400000, guid: 499a2b7a054d59948b8d9dca7d1a4798,
+    type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
   speed: 8
+  turnSpeed: 3
+  turnDist: 5
+  stoppingDistance: 0
   proximityRadius: 2
   viewRadius: 10
-  interest: {fileID: 0}
   ItemsInProximity: []
   ItemsInView: []
   state: 0

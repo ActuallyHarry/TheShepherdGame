@@ -6,43 +6,54 @@ public class ShpdAnimal : Actor
 {
     public enum State
     {
-        ShpdWhistled,
-        Hungry
+        Dawdle,
+        FollowShepard,
+        FindFood
     }
     public State state;
 
     float attentionTime;
     float aTimer =0;
 
-    new  void Begin()
+    public override  void Begin()
     {
         base.Begin();
     }
-    new void Update()
+    public void SetShepard(Shepard _shpd)
     {
-        base.Update();
+        leader = _shpd;
+    }
 
+    void Update()
+    {
+      
+        //Debug.Log(target);
         switch (state)
         {
-            case State.ShpdWhistled:
-                OnShepardWhistle();
+            case State.Dawdle:
                 break;
-            case State.Hungry:
-                OnHungry();
+            case State.FollowShepard:
+                break;
+            case State.FindFood:
                 break;
         }
 
+       
 
-        
-        
-        
+
+        BUpdate();
     }
     void OnHungry()
     {
-        Debug.Log("Hunfry");
+        //Debug.Log("Hunfry");
         List<Transform> grass = filter.FilterContext(ItemsInView, "Plant");
         
-        interest = grass[0];       //if no plants throws error out of range.
+        // will need to do checks if grass is taken
+        if(grass[0] != null)
+        {
+            interest = grass[0];
+        }
+              //if no plants throws error out of range.
         
     }
 
@@ -52,14 +63,15 @@ public class ShpdAnimal : Actor
         if (aTimer > attentionTime)
         {
             aTimer = 0;
-            state = State.Hungry; //will need to be changed to whatever occurs when lost shepards attention;
+            state = State.Dawdle; //will need to be changed to whatever occurs when lost shepards attention;
         }
     }
 
     public void NotifyWhistle(Shepard shpd)
     {
         interest = shpd.transform;
-        state = State.ShpdWhistled;
+        state = State.FollowShepard;       
         attentionTime = Random.Range(2, 10);
+        OnShepardWhistle();
     }
 }

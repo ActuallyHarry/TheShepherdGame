@@ -5,16 +5,16 @@ using UnityEngine.AI;
 
 public class Shepard : Actor
 {
-    public List<ShpdAnimal> animals;
+    public List<ShpdAnimal> animals = new List<ShpdAnimal>();
     bool whistle;   
 
     new void Begin()
     {
         base.Begin();
     }
-    new void Update()
+    void Update()
     {
-        base.Update();
+        BUpdate();
         whistle = Input.GetMouseButtonUp(1);
         UpdateAnimals();
   

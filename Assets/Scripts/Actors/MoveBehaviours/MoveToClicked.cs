@@ -41,4 +41,14 @@ public class MoveToClicked : MoveBehaviour
     {
         lastClickedLocation = actor.transform.position;
     }
+
+    public override Actor.MoveMode ReturnMoveMode()
+    {
+        return Actor.MoveMode.NavGrid;
+    }
+
+    public override Quaternion CalculateRotation(Actor actor)
+    {
+        return Quaternion.identity;
+    }
 }

@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 043fa1548d9d0754aa69e19e03863824, type: 3}
-  m_Name: MoveToTarget
+  m_Script: {fileID: 11500000, guid: 2f432dd9c40ae7f4495066e0a466d0a8, type: 3}
+  m_Name: MoveToShepard
   m_EditorClassIdentifier: 
