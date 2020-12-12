@@ -63,7 +63,7 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   checkPoints: []
   moveBehaviourOptions: []
-  currentMoveBehaviour: {fileID: 11400000, guid: b55e18b367bcac34284665c969a08039,
+  currentMoveBehaviour: {fileID: 11400000, guid: de59ebbf5b3641a4dabc385593ae5c7c,
     type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
   speed: 3

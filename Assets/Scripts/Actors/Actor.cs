@@ -149,7 +149,6 @@ public class Actor : MonoBehaviour
 
             if ((target - targetPosOld).sqrMagnitude > sqrMovethreshold)
             {
-                Debug.Log("new path");
                 PathRequestManager.RequestPath(new PathRequest(transform.position, target, OnPathFound));
                 targetPosOld = target;
             }
