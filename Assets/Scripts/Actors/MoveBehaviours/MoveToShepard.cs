@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviours/MoveBehaviour/MoveToShepard")]
 public class MoveToShepard : MoveBehaviour
 {
-    public override Vector3 CalculateMove(Actor actor)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> context)
     {
         Vector3 velocity = actor.leader.transform.position - actor.transform.position;
         velocity = velocity.normalized;
@@ -13,7 +13,7 @@ public class MoveToShepard : MoveBehaviour
         return velocity;
     }
 
-    public override Quaternion CalculateRotation(Actor actor)
+    public override Quaternion CalculateRotation(Actor actor, Vector3 velocity)
     {
         Quaternion rotation = Quaternion.LookRotation(actor.leader.transform.position - actor.transform.position);
         return rotation;

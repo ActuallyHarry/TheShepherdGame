@@ -45,15 +45,15 @@ public class ShpdAnimal : Actor
     }
     void OnHungry()
     {
-        //Debug.Log("Hunfry");
-        List<Transform> grass = filter.FilterContext(ItemsInView, "Plant");
+        ////Debug.Log("Hunfry");
+        //List<Transform> grass = filter.FilterContext(ItemsInView, "Plant");
         
-        // will need to do checks if grass is taken
-        if(grass[0] != null)
-        {
-            interest = grass[0];
-        }
-              //if no plants throws error out of range.
+        //// will need to do checks if grass is taken
+        //if(grass[0] != null)
+        //{
+        //    interest = grass[0];
+        //}
+        //      //if no plants throws error out of range.
         
     }
 

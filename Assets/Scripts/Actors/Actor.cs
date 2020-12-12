@@ -20,11 +20,8 @@ public class Actor : MonoBehaviour
     public MoveBehaviour currentMoveBehaviour;
     public DetectionBehaviour detB;
 
-    [HideInInspector]
-    public ContextFilter filter = new ContextFilter();
 
     [Header("Navigation")]
-    bool requiresNavigation = false;
     public float speed = 8;
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMovethreshold = 0.5f;    
@@ -35,13 +32,16 @@ public class Actor : MonoBehaviour
 
     [Header("Detection")]
     public float proximityRadius;
-    public float viewRadius;  
+    public float viewRadius;
+    public float avoidanceRadius = 2f;
+    [HideInInspector]
+    public float SquareAvoidanceRadius;
     public List<Transform> ItemsInProximity = new List<Transform>();
     public List<Transform> ItemsInView = new List<Transform>();
 
     public virtual void Begin()
     {
-      
+        SquareAvoidanceRadius = avoidanceRadius * avoidanceRadius;
         currentMoveBehaviour.ResetValues(this);
 
         if(interest == null)
@@ -61,8 +61,9 @@ public class Actor : MonoBehaviour
         ItemsInProximity = detB.GetContext(this, proximityRadius);
         ItemsInView = detB.GetContext(this, viewRadius);
         moveMode = currentMoveBehaviour.ReturnMoveMode();
-        Quaternion rot = currentMoveBehaviour.CalculateRotation(this);
-        Vector3 move = currentMoveBehaviour.CalculateMove(this);
+        Vector3 move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity);
+        Quaternion rot = currentMoveBehaviour.CalculateRotation(this, move);
+       
 
         switch (moveMode)
         {

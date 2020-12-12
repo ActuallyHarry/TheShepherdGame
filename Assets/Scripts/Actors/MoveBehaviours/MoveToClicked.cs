@@ -20,7 +20,7 @@ public class MoveToClicked : MoveBehaviour
 
  
 
-    public override Vector3 CalculateMove(Actor actor)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> context)
     {
         if (Input.GetMouseButtonUp((int)click))
         {
@@ -47,8 +47,8 @@ public class MoveToClicked : MoveBehaviour
         return Actor.MoveMode.NavGrid;
     }
 
-    public override Quaternion CalculateRotation(Actor actor)
+    public override Quaternion CalculateRotation(Actor actor, Vector3 velocity)
     {
-        return Quaternion.identity;
+        return Quaternion.LookRotation(velocity - actor.transform.position);
     }
 }
