@@ -61,14 +61,16 @@ MonoBehaviour:
   interest: {fileID: 0}
   leader: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
+  checkPoints: []
   moveBehaviourOptions: []
   currentMoveBehaviour: {fileID: 11400000, guid: b55e18b367bcac34284665c969a08039,
     type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
-  speed: 8
+  speed: 3
+  maxSpeed: 5
   turnSpeed: 3
   turnDist: 5
-  stoppingDistance: 0
+  stoppingDistance: 0.5
   proximityRadius: 2
   viewRadius: 10
   avoidanceRadius: 2

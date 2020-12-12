@@ -139,18 +139,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2afd30fb67a8a7408a7805e8a6839c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interest: {fileID: 0}
+  leader: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+  checkPoints: []
   moveBehaviourOptions: []
   currentMoveBehaviour: {fileID: 11400000, guid: a40e5858820ea034c8f5fd26066729a0,
     type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
-  speed: 8
-  target: {x: 0, y: 0, z: 0}
+  speed: 7
+  maxSpeed: 10
   turnSpeed: 3
   turnDist: 5
   stoppingDistance: 0.1
   proximityRadius: 2
   viewRadius: 10
-  interest: {fileID: 0}
+  avoidanceRadius: 2
+  SquareAvoidanceRadius: 0
   ItemsInProximity: []
   ItemsInView: []
   animals: []

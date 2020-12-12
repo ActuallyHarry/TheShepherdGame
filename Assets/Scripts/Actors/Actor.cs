@@ -9,6 +9,8 @@ public class Actor : MonoBehaviour
     public Actor leader; // example shepard is leader of sheep
     public Vector3 target; // for naviagtion grid. -> must be relataoiviley static postions
 
+    public Vector3[] checkPoints;
+
     public enum MoveMode
     {
         NavGrid,
@@ -22,7 +24,9 @@ public class Actor : MonoBehaviour
 
 
     [Header("Navigation")]
-    public float speed = 8;
+    public float speed = 7;
+    public float maxSpeed = 10;
+    float squareMaxSpeed;
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMovethreshold = 0.5f;    
     public float turnSpeed = 3;
@@ -41,6 +45,7 @@ public class Actor : MonoBehaviour
 
     public virtual void Begin()
     {
+        squareMaxSpeed = maxSpeed * maxSpeed;
         SquareAvoidanceRadius = avoidanceRadius * avoidanceRadius;
         currentMoveBehaviour.ResetValues(this);
 
@@ -103,6 +108,12 @@ public class Actor : MonoBehaviour
     //for behaviours
     private void Move(Vector3 velocity, Quaternion rotation)
     {
+        if (velocity.sqrMagnitude > squareMaxSpeed)
+        {
+            velocity = velocity.normalized * maxSpeed;
+        }        
+    
+
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, turnSpeed);
         transform.position += velocity * Time.deltaTime;
     }
