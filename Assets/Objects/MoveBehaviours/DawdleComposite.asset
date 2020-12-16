@@ -10,7 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45eca2a871e1eaa46b3ab7b5efa42d02, type: 3}
-  m_Name: Dawdle
+  m_Name: DawdleComposite
   m_EditorClassIdentifier: 
-  behaviours: []
-  weights: []
+  behaviours:
+  - {fileID: 11400000, guid: bcf5f84f57eef3145968ffee7b616d78, type: 2}
+  - {fileID: 11400000, guid: 6d28188a1b0b3c841904f717e540cd1f, type: 2}
+  - {fileID: 11400000, guid: ba22a03bdc9fa6f4a9a83e0695731042, type: 2}
+  - {fileID: 11400000, guid: beb4ff5513f0bb34ab14fa7af1b48b5f, type: 2}
+  weights:
+  - 2
+  - 8
+  - 20
+  - 10

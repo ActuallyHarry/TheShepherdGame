@@ -9,7 +9,7 @@ public class ObstacleAvoidance : MoveBehaviour
     [Range(0.01f, 2f)]
     public float radius = 0.5f;
 
-    public override Vector3 CalculateMove(Actor actor, List<Transform> context)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
     {
         Vector3 bestDir = actor.transform.forward;
         float furthestUnobstructedDst = 0;

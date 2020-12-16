@@ -9,6 +9,7 @@ public class Actor : MonoBehaviour
     public Actor leader; // example shepard is leader of sheep
     public Vector3 target; // for naviagtion grid. -> must be relataoiviley static postions
 
+    [HideInInspector]
     public Vector3[] checkPoints;
 
     public enum MoveMode
@@ -66,7 +67,7 @@ public class Actor : MonoBehaviour
         ItemsInProximity = detB.GetContext(this, proximityRadius);
         ItemsInView = detB.GetContext(this, viewRadius);
         moveMode = currentMoveBehaviour.ReturnMoveMode();
-        Vector3 move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity);
+        Vector3 move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
         Quaternion rot = currentMoveBehaviour.CalculateRotation(this, move);
        
 

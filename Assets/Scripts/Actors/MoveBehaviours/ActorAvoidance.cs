@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Behaviours/MoveBehaviour/ActorAvoidance")]
 public class ActorAvoidance : MoveBehaviour
 {
-    public override Vector3 CalculateMove(Actor actor, List<Transform> context)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
     {
         //if no neigbours return no adjustment
-        if (context.Count == 0)
+        if (proximal.Count == 0)
         {
             return Vector3.zero;
         }
@@ -16,7 +16,7 @@ public class ActorAvoidance : MoveBehaviour
         //add all points together and average
         Vector3 avoidanceMove = Vector3.zero;
         int nAvoid = 0;
-        List<Transform> filteredContext = ContextFilter.FilterForActors(context);
+        List<Transform> filteredContext = ContextFilter.FilterForActors(proximal);
         foreach (Transform item in filteredContext)
         {
             if (Vector3.SqrMagnitude(item.position - actor.transform.position) < actor.SquareAvoidanceRadius)

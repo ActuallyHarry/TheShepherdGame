@@ -8,7 +8,7 @@ public class CompositeMoveBehaviour : MoveBehaviour
     public MoveBehaviour[] behaviours;
     public float[] weights;
 
-    public override Vector3 CalculateMove(Actor actor, List<Transform> context)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
     {
         //handle daa mismatch
         if (weights.Length != behaviours.Length)
@@ -23,7 +23,7 @@ public class CompositeMoveBehaviour : MoveBehaviour
         //iterate through behvoiurs
         for (int i = 0; i < behaviours.Length; i++)
         {
-            Vector3 partialMove = behaviours[i].CalculateMove(actor, context) * weights[i];
+            Vector3 partialMove = behaviours[i].CalculateMove(actor, proximal, view) * weights[i];
 
             if (partialMove != Vector3.zero)
             {
@@ -48,7 +48,10 @@ public class CompositeMoveBehaviour : MoveBehaviour
 
     public override void ResetValues(Actor actor)
     {
-        
+        for (int i = 0; i < behaviours.Length; i++)
+        {
+            behaviours[i].ResetValues(actor);
+        }
     }
 
     public override Actor.MoveMode ReturnMoveMode()

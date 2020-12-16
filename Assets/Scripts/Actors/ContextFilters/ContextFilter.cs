@@ -31,6 +31,19 @@ public static class ContextFilter
 
         return filteredContext;
     }
+    public static List<Transform> FilterForHerd(List<Transform> context)
+    {
+        List<Transform> filteredContext = new List<Transform>(0);
+        foreach (Transform t in context)
+        {
+            if (t.GetComponent<ShpdAnimal>() != null)
+            {
+                filteredContext.Add(t);
+            }
+        }
+
+        return filteredContext;
+    }
 
     public  static bool ContextContainsSpecific(List<Transform> context, Transform specific)
     {

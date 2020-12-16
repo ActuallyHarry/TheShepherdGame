@@ -6,7 +6,7 @@ public abstract class MoveBehaviour : ScriptableObject
 {
     public abstract Actor.MoveMode ReturnMoveMode();
 
-    public abstract Vector3 CalculateMove(Actor actor, List<Transform> context);
+    public abstract Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view);
 
     public abstract Quaternion CalculateRotation(Actor actor, Vector3 velocity);
 
