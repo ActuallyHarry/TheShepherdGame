@@ -13,7 +13,7 @@ public class MoveToShepard : MoveBehaviour
         Vector3 velocity = actor.leader.transform.position - actor.transform.position;
         velocity = velocity.normalized;
         velocity *= actor.speed;
-        velocity = Vector3.SmoothDamp(actor.transform.forward, velocity, ref currentVelocity, agentSmoothTime);
+        //velocity = Vector3.SmoothDamp(actor.transform.forward, velocity, ref currentVelocity, agentSmoothTime);
         return velocity;
     }
 

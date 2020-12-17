@@ -31,7 +31,6 @@ public class UnConformMove : MoveBehaviour
         velocity = -velocity;
 
         //velocity = Vector3.SmoothDamp(actor.transform.forward, velocity, ref currentVelocity, agentSmoothTime);
-        Debug.Log(velocity);
         return velocity;
     }
 

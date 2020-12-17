@@ -8,8 +8,9 @@ public class Shepard : Actor
     public List<ShpdAnimal> animals = new List<ShpdAnimal>();
     bool whistle;   
 
-    new void Begin()
+    public override void Begin()
     {
+        currentMoveBehaviour = moveBehaviourOptions[0];
         base.Begin();
     }
     void Update()

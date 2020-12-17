@@ -19,8 +19,9 @@ public class Actor : MonoBehaviour
     }
     MoveMode moveMode;
 
+    
     public MoveBehaviour[] moveBehaviourOptions;
-    public MoveBehaviour currentMoveBehaviour;
+    protected MoveBehaviour currentMoveBehaviour;
     public DetectionBehaviour detB;
 
 
@@ -67,6 +68,7 @@ public class Actor : MonoBehaviour
         ItemsInProximity = detB.GetContext(this, proximityRadius);
         ItemsInView = detB.GetContext(this, viewRadius);
         moveMode = currentMoveBehaviour.ReturnMoveMode();
+        Debug.Log(currentMoveBehaviour);
         Vector3 move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
         Quaternion rot = currentMoveBehaviour.CalculateRotation(this, move);
        

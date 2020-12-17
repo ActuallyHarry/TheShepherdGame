@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShpdAnimal : Actor
 {
+    //order of behaviours in the movebeahviour options for sheep should match the oder of states in this enum
     public enum State
     {
         Dawdle,
@@ -17,6 +18,8 @@ public class ShpdAnimal : Actor
 
     public override  void Begin()
     {
+        state = State.Dawdle;
+        currentMoveBehaviour = moveBehaviourOptions[(int)State.Dawdle];
         base.Begin();
     }
     public void SetShepard(Shepard _shpd)
@@ -31,8 +34,10 @@ public class ShpdAnimal : Actor
         switch (state)
         {
             case State.Dawdle:
+                OnDawdle();
                 break;
             case State.FollowShepard:
+                OnFollowShepard();
                 break;
             case State.FindFood:
                 break;
@@ -43,6 +48,22 @@ public class ShpdAnimal : Actor
 
         BUpdate();
     }
+
+    #region StateFunctions
+    void OnDawdle()
+    {
+        currentMoveBehaviour = moveBehaviourOptions[(int)State.Dawdle];
+        interest = transform;
+    }
+
+    void OnFollowShepard()
+    {
+        Debug.Log("Whistle");
+        AttentionTimer();
+        currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];
+        interest = leader.transform;
+    }
+
     void OnHungry()
     {
         ////Debug.Log("Hunfry");
@@ -56,8 +77,9 @@ public class ShpdAnimal : Actor
         //      //if no plants throws error out of range.
         
     }
+    #endregion
 
-    void OnShepardWhistle()
+    void AttentionTimer()
     {
         aTimer += Time.deltaTime;
         if (aTimer > attentionTime)
@@ -69,9 +91,8 @@ public class ShpdAnimal : Actor
 
     public void NotifyWhistle(Shepard shpd)
     {
-        interest = shpd.transform;
+        
         state = State.FollowShepard;       
-        attentionTime = Random.Range(2, 10);
-        OnShepardWhistle();
+        attentionTime = Random.Range(8, 15);
     }
 }
