@@ -11,6 +11,7 @@ public class TileObject : MonoBehaviour
     public Exit[] exits;
     public GameObject[] navMeshData;
 
+    public GameObject NavigationData;
     public GameObject asset; // this is the thing that actually moves
     public Transform inacitvePos;
     public Transform activePos;
@@ -46,7 +47,10 @@ public class TileObject : MonoBehaviour
 
     }
 
-   
+   public void TurnOnColliders(bool u)
+    {
+        NavigationData.SetActive(u);
+    }
 
     public bool IsActive()
     {

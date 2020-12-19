@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
         pointsInCircle = CalculatePointsAroundCircle();
         tMan.MakeMap();
         Physics.SyncTransforms(); // this is required because the tiles are made in same frame as the nav grid is
-        navGrid.CreateGrid();       
+        navGrid.CreateGrid();
+        tMan.StartMap();
         SetUpPlayer();
         SetUpHerd();
 

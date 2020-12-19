@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class TileSetter : MonoBehaviour
 {
-    public Tile[,] AttachTileObjects(Tile[,] map, int tileScale, int tileOffset, Transform parent)
+    public Tile[,] AttachTileObjects(Tile[,] map, int tileScale, int tileOffset, Transform parent, int Xend, int Yend)
     {
         for (int x = 0; x < map.GetLength(0); x++)
         {
             for (int y = 0; y < map.GetLength(1); y++)
             {
+                if((x==0 & y==0) || (x==Xend && y == Yend))
+                {
+                    AttachPastureTile(map[x, y], tileScale, tileOffset, parent);
+                    continue;
+                }               
+
                 AttachTile(map[x, y], tileScale, tileOffset, parent);
 
             }
@@ -34,48 +40,77 @@ public class TileSetter : MonoBehaviour
     //    return map;
     //}
 
+    void AttachPastureTile(Tile tile, int tileScale, int tileOffset,Transform parent)
+    {
+        GameObject t = null;
+        TileObject to = null;
+        bool hasAdjacentExit;
+        int numOfExits = DetermineTileExits(tile, out hasAdjacentExit);
+
+        if (numOfExits == 1) //single
+        {
+            t = Instantiate(TileManager.SINGLE[0].gameObject, parent);
+            to = t.GetComponent<TileObject>();
+        }
+        if (numOfExits == 2 && !hasAdjacentExit) //straight
+        {
+            t = Instantiate(TileManager.STRAIGHT[0].gameObject, parent);
+            to = t.GetComponent<TileObject>();
+        }
+        if (numOfExits == 2 && hasAdjacentExit) //cornor
+        {
+            t = Instantiate(TileManager.CORNER[0].gameObject, parent);
+            to = t.GetComponent<TileObject>();
+        }
+        if (numOfExits == 3) //tjunction
+        {
+            t = Instantiate(TileManager.JUNCTION[0].gameObject, parent);
+            to = t.GetComponent<TileObject>();
+        }
+        if (numOfExits == 4) //allway
+        {
+            t = Instantiate(TileManager.ALL[0].gameObject, parent);
+            to = t.GetComponent<TileObject>();
+        }
+
+        PositionTile(t, tile.position, tileScale, tileOffset);
+        to = OrientTile(to.code, tile.tileCode, to);
+        to.thisTile = tile;
+        tile.tileObject = to;
+    }
+
     void AttachTile(Tile tile, int tileScale, int tileOffset, Transform parent)
     {
         GameObject t = null;
         TileObject to = null;
-        int numOFExits = 0;
-        bool hasAdjacentExit = false;
-        for (int i = 0; i < tile.tileCode.Length; i++)
-        {
-            if(tile.tileCode[i] == 1)
-            {
-                numOFExits++;
-            }
-
-            if (!hasAdjacentExit && i != 0 && ((tile.tileCode[i] == 1 && tile.tileCode[i - 1] == 1) || (tile.tileCode[0] == 1 && tile.tileCode[3] == 1))) 
-            {
-                hasAdjacentExit = true;
-            }
-        }
+        bool hasAdjacentExit;
+        int numOfExits = DetermineTileExits(tile, out hasAdjacentExit);
+      
         //Debug.Log(tile.tileCode[0].ToString() + tile.tileCode[1].ToString() + tile.tileCode[2].ToString() + tile.tileCode[3].ToString() + " " + numOFExits.ToString() + hasAdjacentExit);
-        if(numOFExits == 1) //single
+        // range between 1 and length so that pasture is never chosen as it can only be used for start and end
+        if(numOfExits == 1) //single
         {
-            t = Instantiate(TileManager.SINGLE[Random.Range(0, TileManager.SINGLE.Count)].gameObject, parent);
+            t = Instantiate(TileManager.SINGLE[Random.Range(1, TileManager.SINGLE.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>();    
         }
-        if (numOFExits == 2 && !hasAdjacentExit) //straight
+        if (numOfExits == 2 && !hasAdjacentExit) //straight
         {
-            t = Instantiate(TileManager.STRAIGHT[Random.Range(0, TileManager.STRAIGHT.Count)].gameObject, parent);
+            t = Instantiate(TileManager.STRAIGHT[Random.Range(1, TileManager.STRAIGHT.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>(); 
         }
-        if (numOFExits == 2 && hasAdjacentExit) //cornor
+        if (numOfExits == 2 && hasAdjacentExit) //cornor
         {
-            t = Instantiate(TileManager.CORNER[Random.Range(0, TileManager.CORNER.Count)].gameObject, parent);
+            t = Instantiate(TileManager.CORNER[Random.Range(1, TileManager.CORNER.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>();  
         }
-        if (numOFExits == 3) //tjunction
+        if (numOfExits == 3) //tjunction
         {
-            t = Instantiate(TileManager.JUNCTION[Random.Range(0, TileManager.JUNCTION.Count)].gameObject, parent);
+            t = Instantiate(TileManager.JUNCTION[Random.Range(1, TileManager.JUNCTION.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>();
         }
-        if(numOFExits == 4) //allway
+        if(numOfExits == 4) //allway
         {
-            t = Instantiate(TileManager.ALL[Random.Range(0, TileManager.ALL.Count)].gameObject, parent);
+            t = Instantiate(TileManager.ALL[Random.Range(1, TileManager.ALL.Count)].gameObject, parent);
             to = t.GetComponent<TileObject>(); 
         }        
 
@@ -139,5 +174,25 @@ public class TileSetter : MonoBehaviour
         t.exits[1] = temp;
         return t;
 
+    }
+
+    int DetermineTileExits(Tile tile, out bool hasAdjacentExit)
+    {
+        int numOFExits = 0;
+        hasAdjacentExit = false;
+        for (int i = 0; i < tile.tileCode.Length; i++)
+        {
+            if (tile.tileCode[i] == 1)
+            {
+                numOFExits++;
+            }
+
+            if (!hasAdjacentExit && i != 0 && ((tile.tileCode[i] == 1 && tile.tileCode[i - 1] == 1) || (tile.tileCode[0] == 1 && tile.tileCode[3] == 1)))
+            {
+                hasAdjacentExit = true;
+            }
+        }
+
+        return numOFExits;
     }
 }

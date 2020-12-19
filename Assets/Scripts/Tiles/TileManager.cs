@@ -12,6 +12,8 @@ public class TileManager : MonoBehaviour
     public int mapSize;
     public int tileScale = 40;
     public int tileOffset =-4;
+    [Range(0,8)]
+    public int endTilePossibleSpawnArea;
 
     [HideInInspector]
     public Actor player;
@@ -19,7 +21,7 @@ public class TileManager : MonoBehaviour
     Tile previousFocusTile;
 
     public Transform tileParent;
-   // defualts for each type: 
+   // defualts for each type: -> pasture is named with an _ so that it is always 0 in list
     public static List<TileObject> ALL = new List<TileObject>();
     public static List<TileObject> JUNCTION = new List<TileObject>();
     public static List<TileObject> STRAIGHT = new List<TileObject>();
@@ -81,7 +83,8 @@ public class TileManager : MonoBehaviour
 
     void CheckCurrentTile()
     {
-       
+
+            //checking if player is in an exit;
             for (int i = 0; i < focusTile.tileObject.exits.Length; i++)
             {
 
@@ -115,6 +118,25 @@ public class TileManager : MonoBehaviour
                    
                 }
             }
+
+            if(previousFocusTile != focusTile)
+            {
+                if(previousFocusTile != null)
+                {
+                    for (int i = 0; i < previousFocusTile.neighbors.Count; i++)
+                    {
+                        previousFocusTile.neighbors[i].tileObject.TurnOnColliders(false);
+                    }
+                }
+
+                focusTile.tileObject.TurnOnColliders(true);
+                for (int i = 0; i < focusTile.neighbors.Count; i++)
+                {
+                    focusTile.neighbors[i].tileObject.TurnOnColliders(true);
+                }
+
+                previousFocusTile = focusTile;
+            }
            
        
         
@@ -136,9 +158,10 @@ public class TileManager : MonoBehaviour
     public void MakeMap()
     {        
         tileMap = mapGen.GenerateMap(mapSize, this);
-        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent);       
+        int xEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
+        int yEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
+        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent.parent, xEnd, yEnd);       
         HideMap();
-        StartMap();
 
     }
 
@@ -155,8 +178,17 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    void StartMap()
+    //this occurs after a navigation mesh has been made in game manager
+    public void StartMap()
     {
+        for (int x = 0; x < mapSize; x++)
+        {
+            for (int y = 0; y < mapSize; y++)
+            {
+                tileMap[x, y].tileObject.TurnOnColliders(false);
+            }
+        }
+        tileMap[0, 0].tileObject.TurnOnColliders(true);
         tileMap[0, 0].tileObject.gameObject.SetActive(true);
         tileMap[0, 0].tileObject.activateTime = 0;
         tileMap[0, 0].tileObject.activating = true;
