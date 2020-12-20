@@ -40,6 +40,12 @@ public class TileSetter : MonoBehaviour
     //    return map;
     //}
 
+    public void PlaceEndLevelObject(GameObject levelEndObject,int x, int y, int tileScale, int tileOffset)
+    {
+        Vector3 position = new Vector3((x + tileOffset) * tileScale, 0, (y + tileOffset) * tileScale);
+        Instantiate(levelEndObject, position, transform.rotation);
+    }
+
     void AttachPastureTile(Tile tile, int tileScale, int tileOffset,Transform parent)
     {
         GameObject t = null;

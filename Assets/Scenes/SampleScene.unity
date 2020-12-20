@@ -588,8 +588,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1914259815}
   - component: {fileID: 1914259817}
-  - component: {fileID: 1914259814}
   - component: {fileID: 1914259813}
+  - component: {fileID: 1914259814}
   - component: {fileID: 1914259816}
   m_Layer: 0
   m_Name: Manager
@@ -615,6 +615,8 @@ MonoBehaviour:
   tileOffset: -4
   endTilePossibleSpawnArea: 5
   player: {fileID: 0}
+  levelEndObject: {fileID: 1580587605356420292, guid: 8708a787a38c981479f3a69351fd0cf2,
+    type: 3}
   tileParent: {fileID: 1755634941}
 --- !u!114 &1914259814
 MonoBehaviour:
@@ -672,9 +674,9 @@ MonoBehaviour:
   tMan: {fileID: 1914259813}
   navGrid: {fileID: 972183763}
   numOfStartingSheep: 4
-  playerPrefab: {fileID: 6021120703833030508, guid: 67a42dca4f4b63a408354e3ed1b0fe4c,
-    type: 3}
   herdPrefab: {fileID: 484409497876164521, guid: 6257b9ecb871ad14aa59737badcfe668,
+    type: 3}
+  playerPrefab: {fileID: 6021120703833030508, guid: 67a42dca4f4b63a408354e3ed1b0fe4c,
     type: 3}
   player: {fileID: 0}
   numOfPoints: 10

@@ -9,6 +9,8 @@ public class TileManager : MonoBehaviour
     MapGenerator mapGen;
     TileSetter tileSet;
     Tile[,] tileMap;
+
+    [Header("MapData")]
     public int mapSize;
     public int tileScale = 40;
     public int tileOffset =-4;
@@ -20,6 +22,8 @@ public class TileManager : MonoBehaviour
     Tile focusTile; // this is the tile that the player is on.
     Tile previousFocusTile;
 
+    [Header("TileResources")]
+    public GameObject levelEndObject;
     public Transform tileParent;
    // defualts for each type: -> pasture is named with an _ so that it is always 0 in list
     public static List<TileObject> ALL = new List<TileObject>();
@@ -94,7 +98,7 @@ public class TileManager : MonoBehaviour
                 }
                 if (focusTile.tileObject.exits[i].exiting)
                 {
-                Destroy(focusTile.tileObject.exits[i]);
+                   
                     switch (i)
                     {
                         case 0:
@@ -115,8 +119,8 @@ public class TileManager : MonoBehaviour
                             break;
                     }
                     focusTile.tileObject.exits[i].exiting = false;
-                   
-                }
+                    Destroy(focusTile.tileObject.exits[i]);
+            }
             }
 
             if(previousFocusTile != focusTile)
@@ -160,7 +164,8 @@ public class TileManager : MonoBehaviour
         tileMap = mapGen.GenerateMap(mapSize, this);
         int xEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
         int yEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
-        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent.parent, xEnd, yEnd);       
+        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent.parent, xEnd, yEnd);
+        tileSet.PlaceEndLevelObject(levelEndObject, xEnd, yEnd, tileScale, tileOffset);
         HideMap();
 
     }
@@ -177,6 +182,8 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+
+    
 
     //this occurs after a navigation mesh has been made in game manager
     public void StartMap()

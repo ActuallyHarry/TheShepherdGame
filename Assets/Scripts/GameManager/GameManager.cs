@@ -1,26 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("ReferenceScripts")]
     public CameraController camCon;
     public  TileManager tMan;
     public Grid navGrid;
 
+    [Header("ActorVars")]  
     public int numOfStartingSheep;
-
+    public GameObject herdPrefab;    
     public GameObject playerPrefab;
-    public GameObject herdPrefab;
     [HideInInspector]
     public Shepard player;
 
+    [Header("Data")]
+    public int numOfPoints = 10;
     Vector3[] pointsInCircle;
-    public int numOfPoints= 10;
+   
 
     void Start()
     {
-
         pointsInCircle = CalculatePointsAroundCircle();
         tMan.MakeMap();
         Physics.SyncTransforms(); // this is required because the tiles are made in same frame as the nav grid is
@@ -55,6 +58,15 @@ public class GameManager : MonoBehaviour
             animal.checkPoints = pointsInCircle;;
             player.animals.Add(animal);
         } 
+    }
+
+
+    public void OnEndConditionsMet() // end conditions will be determined by the end level script? at least this function is called by it.
+    {
+        //adjust num of sheep
+        //save progress
+        //begin new level
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     Vector3[] CalculatePointsAroundCircle()

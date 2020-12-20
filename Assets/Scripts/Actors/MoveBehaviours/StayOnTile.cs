@@ -5,19 +5,49 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviours/MoveBehaviour/StayOnTileRadius")]
 public class StayOnTile : MoveBehaviour
 {
-    public float radius = 20f;
+    //public float radius = 20f;
 
     public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
     {
-        Vector3 center = actor.ReturnCurrentTile().position;
-        Vector3 centerOffset = center - actor.transform.position;
-        float t = centerOffset.magnitude / radius;
-        if (t < 0.9f)
+        //Vector3 center = actor.ReturnCurrentTile().position;
+        //Vector3 centerOffset = center - actor.transform.position;
+        //float t = centerOffset.magnitude / radius;
+        //if (t < 0.9f)
+        //{
+        //    return Vector3.zero;
+        //}
+
+        //return centerOffset * t * t;
+        Vector3 bestDir = actor.transform.forward;
+        float furthestUnobstructedDst = 0;
+        RaycastHit hit;
+
+
+        for (int i = 0; i < actor.checkPoints.Length; i++)
         {
-            return Vector3.zero;
+            Vector3 dir = actor.transform.TransformDirection(actor.checkPoints[i]);
+            if (Physics.Raycast(actor.transform.position, dir, out hit, actor.avoidanceRadius))
+            {
+                if(hit.transform.tag == "Exit")
+                {
+                    if (hit.distance > furthestUnobstructedDst)
+                    {
+                        bestDir = dir;
+                        furthestUnobstructedDst = hit.distance;
+                    }
+                }
+                
+
+            }
+            else
+            {
+
+                return dir;
+            }
+
         }
 
-        return centerOffset * t * t;
+        return bestDir;
     }
 
     public override Quaternion CalculateRotation(Actor actor, Vector3 velocity)
