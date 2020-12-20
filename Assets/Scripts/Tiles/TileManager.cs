@@ -164,7 +164,7 @@ public class TileManager : MonoBehaviour
         tileMap = mapGen.GenerateMap(mapSize, this);
         int xEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
         int yEnd = Random.Range(mapSize - endTilePossibleSpawnArea - 1, mapSize - 1);
-        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent.parent, xEnd, yEnd);
+        tileMap = tileSet.AttachTileObjects(tileMap, tileScale, tileOffset, tileParent, xEnd, yEnd);
         tileSet.PlaceEndLevelObject(levelEndObject, xEnd, yEnd, tileScale, tileOffset);
         HideMap();
 

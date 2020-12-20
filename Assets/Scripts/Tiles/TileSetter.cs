@@ -55,12 +55,12 @@ public class TileSetter : MonoBehaviour
 
         if (numOfExits == 1) //single
         {
-            t = Instantiate(TileManager.SINGLE[0].gameObject, parent);
+            t = Instantiate(TileManager.SINGLE[0].gameObject, parent);          
             to = t.GetComponent<TileObject>();
         }
         if (numOfExits == 2 && !hasAdjacentExit) //straight
         {
-            t = Instantiate(TileManager.STRAIGHT[0].gameObject, parent);
+            t = Instantiate(TileManager.STRAIGHT[0].gameObject, parent);           
             to = t.GetComponent<TileObject>();
         }
         if (numOfExits == 2 && hasAdjacentExit) //cornor
@@ -106,7 +106,7 @@ public class TileSetter : MonoBehaviour
         }
         if (numOfExits == 2 && hasAdjacentExit) //cornor
         {
-            t = Instantiate(TileManager.CORNER[Random.Range(1, TileManager.CORNER.Count)].gameObject, parent);
+            t = Instantiate(TileManager.CORNER[Random.Range(1, TileManager.CORNER.Count)].gameObject, parent); 
             to = t.GetComponent<TileObject>();  
         }
         if (numOfExits == 3) //tjunction
