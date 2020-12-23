@@ -218,12 +218,10 @@ public class Actor : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, proximityRadius);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, viewRadius);
-    }
-    public void OnDrawGizmos()
-    {
         if (path != null)
         {
             path.DrawWithGizmos();
         }
     }
+    
 }

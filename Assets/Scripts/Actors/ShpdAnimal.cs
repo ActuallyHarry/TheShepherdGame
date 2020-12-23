@@ -21,7 +21,7 @@ public class ShpdAnimal : Actor
     State prevState;
 
     float attentionTime;
-    float aTimer =0;
+    float aTimer = 0;
 
     public override  void Begin()
     {
@@ -82,9 +82,13 @@ public class ShpdAnimal : Actor
             state = State.Stop;
             return;
         }
-        else if(state == State.Stop)
+        else if (state == State.Stop)
         {
-            state = State.Dawdle;
+            if(prevState == State.Stop)
+            {
+                state = State.Dawdle;
+            }
+            state = prevState;
         }
 
         // state = State.Dawdle;
@@ -93,6 +97,7 @@ public class ShpdAnimal : Actor
     #region StateFunctions
     void OnStop()
     {
+        AttentionTimer();
         currentMoveBehaviour = moveBehaviourOptions[(int)State.Stop];                   
         //prevState = state; stop shouldntreally ever be a previous state;
 
@@ -124,21 +129,24 @@ public class ShpdAnimal : Actor
 
     void OnFindFood()
     {
-        if(interest.gameObject.tag != "Plant")
+        Debug.Log(interest.gameObject.tag);
+        if(interest.gameObject.tag != "Plant") // need to handle in case of no food
         {
-            currentMoveBehaviour = moveBehaviourOptions[(int)State.FindFood];
-            List<Transform> foodInView = ContextFilter.FilterContext(ItemsInView, "plant");
+            List<Transform> foodInView = ContextFilter.FilterContext(ItemsInView, "Plant");
             foreach (Transform item in foodInView)
             {
                 Food food = item.GetComponent<Food>();
                 if (!food.taken)
                 {
-                    Debug.Log("foundFood");
+
                     food.taken = true;
                     interest = item;
+                    currentMoveBehaviour = moveBehaviourOptions[(int)State.FindFood];
                     break;
                 }
             }
+            
+          
             prevState = state;
         }
       

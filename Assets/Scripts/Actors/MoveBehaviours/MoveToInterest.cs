@@ -12,7 +12,7 @@ public class MoveToInterest : MoveBehaviour
             return Vector3.zero;
         }
 
-        Vector3 velocity = actor.interest.position = actor.transform.position;
+        Vector3 velocity = actor.interest.position - actor.transform.position;
 
         return velocity;
     }
