@@ -81,7 +81,7 @@ public class ShpdAnimal : Actor
             }           
         }
 
-        state = State.Dawdle;
+       // state = State.Dawdle;
     }
 
     #region StateFunctions
