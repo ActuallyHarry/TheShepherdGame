@@ -8,6 +8,7 @@ public class TileManager : MonoBehaviour
 {
     MapGenerator mapGen;
     TileSetter tileSet;
+    TilePopulator tilePop;
     Tile[,] tileMap;
 
     [Header("MapData")]
@@ -19,8 +20,7 @@ public class TileManager : MonoBehaviour
 
     [HideInInspector]
     public Actor player;
-    Tile focusTile; // this is the tile that the player is on.
-    Tile previousFocusTile;
+     // this is the tile that the player is on.
 
     [Header("TileResources")]
     public GameObject levelEndObject;
@@ -73,19 +73,18 @@ public class TileManager : MonoBehaviour
     {
         mapGen = GetComponent<MapGenerator>();
         tileSet = GetComponent<TileSetter>();
+        tilePop = GetComponent<TilePopulator>();
        
     }
 
-    private void Update()
-    {
-     
-        focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;
+    public void TileUpdate(Tile focusTile, Tile previousFocusTile)
+    {       
     
-        CheckCurrentTile();
-        UpdateTiles();
+        CheckCurrentTile(focusTile, previousFocusTile);
+        ActivateTiles();
     }
 
-    void CheckCurrentTile()
+    void CheckCurrentTile(Tile focusTile, Tile previousFocusTile)
     {
 
             //checking if player is in an exit;
@@ -139,19 +138,20 @@ public class TileManager : MonoBehaviour
                     focusTile.neighbors[i].tileObject.TurnOnColliders(true);
                 }
 
-                previousFocusTile = focusTile;
+               
             }
            
        
         
     }
 
-    void UpdateTiles()
+    void ActivateTiles()
     {
         if (activatingTiles.Count > 0)
         {
             Tile tile = activatingTiles.Dequeue();
             tile.tileObject.activating = true;
+            tilePop.PopulateTile(tile.tileObject);
             //Debug.Log(activatingTiles.Count);
         }     
     }

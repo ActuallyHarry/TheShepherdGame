@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [Header("Data")]
     public int numOfPoints = 10;
     Vector3[] pointsInCircle;
+    Tile focusTile;
+    Tile previousFocusTile;
    
 
     void Start()
@@ -33,16 +35,15 @@ public class GameManager : MonoBehaviour
         SetUpHerd();
 
     }
-
     public void SetUpPlayer()
-    {     
-        
-        player = Instantiate(playerPrefab, new Vector3(tMan.tileOffset*tMan.tileScale,0,tMan.tileOffset*tMan.tileScale), transform.rotation, null).GetComponent<Shepard>();
+    {
+
+        player = Instantiate(playerPrefab, new Vector3(tMan.tileOffset * tMan.tileScale, 0, tMan.tileOffset * tMan.tileScale), transform.rotation, null).GetComponent<Shepard>();
         camCon.player = player;
         player.checkPoints = pointsInCircle;
         tMan.player = player;
         player.Begin();
-     
+
     }
 
     public void SetUpHerd()
@@ -55,11 +56,34 @@ public class GameManager : MonoBehaviour
             ShpdAnimal animal = Instantiate(herdPrefab, new Vector3(tMan.tileOffset * tMan.tileScale + i, 0, tMan.tileOffset * tMan.tileScale + i), transform.rotation, null).GetComponent<ShpdAnimal>();
             animal.Begin();
             animal.SetShepard(player);
-            animal.checkPoints = pointsInCircle;;
+            animal.checkPoints = pointsInCircle; ;
             player.animals.Add(animal);
-        } 
+        }
     }
 
+
+    private void Update()
+    {
+        focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;        
+        tMan.TileUpdate(focusTile, previousFocusTile);
+        if (focusTile != previousFocusTile)
+        {
+            OnNextTile();
+            previousFocusTile = focusTile;
+        }
+    }
+
+    //handles the tile loop,eg adjust sheep hunger etc
+    void OnNextTile()
+    {
+        List<ShpdAnimal> animals = player.animals;
+        foreach (ShpdAnimal animal in animals)
+        {
+            animal.DecreaseHunger();
+        }
+    }
+
+    
 
     public void OnEndConditionsMet() // end conditions will be determined by the end level script? at least this function is called by it.
     {

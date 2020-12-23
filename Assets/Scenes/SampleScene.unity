@@ -591,6 +591,7 @@ GameObject:
   - component: {fileID: 1914259813}
   - component: {fileID: 1914259814}
   - component: {fileID: 1914259816}
+  - component: {fileID: 1914259818}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -680,3 +681,17 @@ MonoBehaviour:
     type: 3}
   player: {fileID: 0}
   numOfPoints: 10
+--- !u!114 &1914259818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914259812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da57b39b55d64ce49b2eb7bdaeffc4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foodPrefab: {fileID: 8279142495067107465, guid: df04ef1ad9a881d41aefdb487220e87d,
+    type: 3}
