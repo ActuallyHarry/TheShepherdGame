@@ -40,6 +40,7 @@ public class ShpdAnimal : Actor
     void Update()
     {
         ui.SetValues(hungerPercentage);
+        ui.StateDebugging(state);
         CheckStatus();
       
         //Debug.Log(target);
@@ -129,7 +130,7 @@ public class ShpdAnimal : Actor
 
     void OnFindFood()
     {
-        Debug.Log(interest.gameObject.tag);
+        //Debug.Log(interest.gameObject.tag);
         if(interest.gameObject.tag != "Plant") // need to handle in case of no food
         {
             List<Transform> foodInView = ContextFilter.FilterContext(ItemsInView, "Plant");
