@@ -25,6 +25,7 @@ public class ShpdAnimal : Actor
 
     public override  void Begin()
     {
+
         ui = GetComponent<UIShpdAnimal>();
         ui.Initialize(hungerPercentage);
         state = State.Dawdle;
@@ -66,12 +67,7 @@ public class ShpdAnimal : Actor
 
     // checks sheeps statitiscs for the need to change its state
     void CheckStatus()
-    {
-        if (ItemsInProximity.Contains(interest))
-        {
-            state = State.Stop;
-            return;
-        }
+    {       
         if(hungerPercentage < 100)
         {
             if(ContextFilter.FilterContext(ItemsInView, "Plant").Count != 0)
@@ -81,14 +77,24 @@ public class ShpdAnimal : Actor
             }           
         }
 
-       // state = State.Dawdle;
+        if (ItemsInProximity.Contains(interest))
+        {
+            state = State.Stop;
+            return;
+        }
+        else if(state == State.Stop)
+        {
+            state = State.Dawdle;
+        }
+
+        // state = State.Dawdle;
     }
 
     #region StateFunctions
     void OnStop()
     {
         currentMoveBehaviour = moveBehaviourOptions[(int)State.Stop];                   
-        prevState = state;
+        //prevState = state; stop shouldntreally ever be a previous state;
 
     }
 
