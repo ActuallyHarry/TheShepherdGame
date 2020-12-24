@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class Food : Item
 {
-    public float nourishementAmount = 100f;
-    public bool taken = false;
-  
+    public float nourishementAmount = 100f;       
+
 }

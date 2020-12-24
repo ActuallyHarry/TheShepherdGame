@@ -6,6 +6,7 @@ public class ShpdAnimal : Actor
 {
     UIShpdAnimal ui;
 
+    bool shpdWhistled = false;
     private float hungerPercentage = 100f;   
     public float hungerDecrease = 10f;
 
@@ -40,7 +41,7 @@ public class ShpdAnimal : Actor
     void Update()
     {
         ui.SetValues(hungerPercentage);
-        ui.StateDebugging(state);
+        ui.StateDebugging(state, System.Array.IndexOf(moveBehaviourOptions, currentMoveBehaviour));
         CheckStatus();
       
         //Debug.Log(target);
@@ -58,28 +59,32 @@ public class ShpdAnimal : Actor
             case State.FindFood:
                 OnFindFood();
                 break;
-        }
-
-       
-
-
+        }   
         BUpdate();
     }
 
     // checks sheeps statitiscs for the need to change its state
     void CheckStatus()
-    {       
-        if(hungerPercentage < 100)
+    {
+        state = State.Dawdle;
+        if (shpdWhistled)
+        {
+            state = State.FollowShepard;
+        }
+
+        if(hungerPercentage < 100 && state != State.FollowShepard)
         {
             if(ContextFilter.FilterContext(ItemsInView, "Plant").Count != 0)
             {
+                prevState = state;
                 state = State.FindFood;
                 return;
             }           
         }
 
-        if (ItemsInProximity.Contains(interest))
+        if (ItemsInProximity.Contains(interest) && (state == State.FollowShepard || state == State.Stop))
         {
+            prevState = state;
             state = State.Stop;
             return;
         }
@@ -108,9 +113,9 @@ public class ShpdAnimal : Actor
     {
         //if(prevState != state)
         //{
-            prevState = state;
-            currentMoveBehaviour = moveBehaviourOptions[(int)State.Dawdle];
             interest = transform;
+            currentMoveBehaviour = moveBehaviourOptions[(int)State.Dawdle];
+            //interest = transform;
         //}
        
     }
@@ -118,47 +123,60 @@ public class ShpdAnimal : Actor
     void OnFollowShepard()
     {
         Debug.Log("Whistle");
+        interest = leader.transform;
         AttentionTimer();
-        //if(prevState != state)
-        //{
-            currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];
-            interest = leader.transform;
-            prevState = state;
-        //}
-        
+        currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];             
     }
 
     void OnFindFood()
-    {
+    {      
         //Debug.Log(interest.gameObject.tag);
         if(interest.gameObject.tag != "Plant") // need to handle in case of no food
         {
             List<Transform> foodInView = ContextFilter.FilterContext(ItemsInView, "Plant");
             foreach (Transform item in foodInView)
             {
-                Food food = item.GetComponent<Food>();
+               Food food = item.GetComponent<Food>();
+
+                if(food.ReturnCurrentTile() != leader.ReturnCurrentTile())
+                {                    
+                    continue;
+                }
                 if (!food.taken)
                 {
-
                     food.taken = true;
                     interest = item;
                     currentMoveBehaviour = moveBehaviourOptions[(int)State.FindFood];
-                    break;
+                    return;
                 }
+                
             }
-            
-          
+            currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard]; // i think this will be best could be dawdle nut this means that the shepard as to lead them to food
+           
             prevState = state;
         }
+        else // interest is a food in this case due to tag being plant
+        {
+            if (ItemsInProximity.Contains(interest))
+            {
+                Food food = interest.GetComponent<Food>();
+                float n = food.nourishementAmount;
+                hungerPercentage = Mathf.Min(100, hungerPercentage + n);
+                food.Destroy();
+                state = State.Dawdle;
+            }
+        }
+
+       
       
     }
 
     #endregion
 
     public void DecreaseHunger()
-    {
-        Debug.Log("HUngedecreaase");
+    {       
         hungerPercentage -= hungerDecrease;
+        Debug.Log(hungerPercentage);
     }
 
     void AttentionTimer()
@@ -167,14 +185,14 @@ public class ShpdAnimal : Actor
         if (aTimer > attentionTime)
         {
             aTimer = 0;
-            state = State.Dawdle; //will need to be changed to whatever occurs when lost shepards attention;
+            shpdWhistled = false; //will need to be changed to whatever occurs when lost shepards attention;
+            interest = transform;
         }
     }
 
-    public void NotifyWhistle(Shepard shpd)
+    public void NotifyWhistle(bool follow)
     {
-        
-        state = State.FollowShepard;       
+        shpdWhistled = follow;
         attentionTime = Random.Range(8, 15);
     }
 }

@@ -11,7 +11,7 @@ public class ObstacleAvoidance : MoveBehaviour
 
     public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
     {
-        Vector3 bestDir = actor.transform.forward;
+        Vector3 bestDir = Vector3.zero;
         float furthestUnobstructedDst = 0;
         RaycastHit hit;
 

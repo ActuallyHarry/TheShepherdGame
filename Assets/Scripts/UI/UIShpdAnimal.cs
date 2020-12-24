@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 public class UIShpdAnimal : MonoBehaviour
 {
-    MeshRenderer mat;
+    public MeshRenderer stateMat;
+    public MeshRenderer mbMat;
 
     float goalHunger; //the value to changeto
     float currentHunger; // the current value
 
     public Slider hungerBar;
 
-    private void Start()
-    {
-        mat = GetComponentInChildren<MeshRenderer>();
-    }
 
     public void Initialize(float hungerMax)
     {
@@ -38,24 +35,43 @@ public class UIShpdAnimal : MonoBehaviour
         hungerBar.value = currentHunger;
     }
 
-    public void StateDebugging(ShpdAnimal.State s)
+    public void StateDebugging(ShpdAnimal.State s, int m)
     {
         switch (s)
         {
             case ShpdAnimal.State.Stop:
-                mat.material.color = Color.black;
+                stateMat.material.color = Color.black;
                 break;
             case ShpdAnimal.State.Dawdle:
-                mat.material.color = Color.grey;
+                stateMat.material.color = Color.grey;
                 break;
             case ShpdAnimal.State.FollowShepard:
-                mat.material.color = Color.green;
+                stateMat.material.color = Color.green;
                 break;
             case ShpdAnimal.State.FindFood:
-                mat.material.color = Color.yellow;
+                stateMat.material.color = Color.yellow;
                 break;
             default:
-                mat.material.color = Color.white;
+                stateMat.material.color = Color.white;
+                break;
+        }
+
+        switch (m)
+        {
+            case 0:
+                mbMat.material.color = Color.black;
+                break;
+            case 1:
+                mbMat.material.color = Color.grey;
+                break;
+            case 2:
+                mbMat.material.color = Color.green;
+                break;
+            case 3:
+                mbMat.material.color = Color.yellow;
+                break;
+            default:
+                mbMat.material.color = Color.white;
                 break;
         }
     }

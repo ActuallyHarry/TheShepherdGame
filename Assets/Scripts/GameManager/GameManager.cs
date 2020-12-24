@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         SetUpPlayer();
         SetUpHerd();
 
+
     }
     public void SetUpPlayer()
     {
@@ -68,7 +69,10 @@ public class GameManager : MonoBehaviour
         tMan.TileUpdate(focusTile, previousFocusTile);
         if (focusTile != previousFocusTile)
         {
-            OnNextTile();
+            if(previousFocusTile != null)
+            {
+                OnNextTile();
+            }            
             previousFocusTile = focusTile;
         }
     }

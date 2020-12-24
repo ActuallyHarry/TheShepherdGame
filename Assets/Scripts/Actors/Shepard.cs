@@ -6,7 +6,10 @@ using UnityEngine.AI;
 public class Shepard : Actor
 {
     public List<ShpdAnimal> animals = new List<ShpdAnimal>();
-    bool whistle;   
+    bool whistleButtonDown;
+    bool whistled = false;
+    float whistleTimer;
+    public float whistleTime = 5; // time that whistle will be togglable until reset;
 
     public override void Begin()
     {
@@ -16,19 +19,32 @@ public class Shepard : Actor
     void Update()
     {
         BUpdate();
-        whistle = Input.GetMouseButtonUp(1);
+        whistleButtonDown = Input.GetMouseButtonUp(1);
         UpdateAnimals();
+        WTimer();
   
+    }
+
+    void WTimer()
+    {
+        whistleTimer += Time.deltaTime;
+        if(whistleTimer > whistleTime)
+        {
+            whistled = false;
+        }
     }
 
     void UpdateAnimals()
     {
-        if (whistle)
+        if (whistleButtonDown)
         {
-            foreach(ShpdAnimal a in animals)
+            whistleTimer = 0;            
+            foreach (ShpdAnimal a in animals)
             {
-                a.NotifyWhistle(this);
+                a.NotifyWhistle(!whistled);
             }
+            whistled = !whistled;
+
         }
     }
 
