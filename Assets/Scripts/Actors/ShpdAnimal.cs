@@ -5,10 +5,13 @@ using UnityEngine;
 public class ShpdAnimal : Actor
 {
     UIShpdAnimal ui;
+    Animator anim;
 
     bool shpdWhistled = false;
     private float hungerPercentage = 100f;   
     public float hungerDecrease = 10f;
+    float eatingTimer =0;
+
 
     //order of behaviours in the movebeahviour options for sheep should match the oder of states in this enum
     public enum State
@@ -26,7 +29,7 @@ public class ShpdAnimal : Actor
 
     public override  void Begin()
     {
-
+        anim = GetComponentInChildren<Animator>();
         ui = GetComponent<UIShpdAnimal>();
         ui.Initialize(hungerPercentage);
         state = State.Dawdle;
@@ -40,6 +43,7 @@ public class ShpdAnimal : Actor
 
     void Update()
     {
+        anim.SetBool("isMoving", isMoving);
         ui.SetValues(hungerPercentage);
         ui.StateDebugging(state, System.Array.IndexOf(moveBehaviourOptions, currentMoveBehaviour));
         CheckStatus();
@@ -79,8 +83,10 @@ public class ShpdAnimal : Actor
                 prevState = state;
                 state = State.FindFood;
                 return;
-            }           
+            }
+            
         }
+        
 
         if (ItemsInProximity.Contains(interest) && (state == State.FollowShepard || state == State.Stop))
         {
@@ -128,7 +134,7 @@ public class ShpdAnimal : Actor
         currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];             
     }
 
-    void OnFindFood()
+   void OnFindFood()
     {      
         //Debug.Log(interest.gameObject.tag);
         if(interest.gameObject.tag != "Plant") // need to handle in case of no food
@@ -147,25 +153,40 @@ public class ShpdAnimal : Actor
                     food.taken = true;
                     interest = item;
                     currentMoveBehaviour = moveBehaviourOptions[(int)State.FindFood];
+                    eatingTimer = 0;
                     return;
+                    
                 }
                 
             }
             currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard]; // i think this will be best could be dawdle nut this means that the shepard as to lead them to food
            
             prevState = state;
-        }
-        else // interest is a food in this case due to tag being plant
+        }    
+        else
         {
-            if (ItemsInProximity.Contains(interest))
+            if (ItemsInProximity.Contains(interest))              
             {
                 Food food = interest.GetComponent<Food>();
                 float n = food.nourishementAmount;
-                hungerPercentage = Mathf.Min(100, hungerPercentage + n);
-                food.Destroy();
-                state = State.Dawdle;
+                if(anim.GetBool("isEating") == false)
+                {
+                    anim.SetBool("isEating", true);
+                }                 
+                eatingTimer += Time.deltaTime;
+                if(eatingTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
+                {
+                   anim.SetBool("isEating", false);
+                    hungerPercentage = Mathf.Min(100, hungerPercentage + n);
+                    food.Destroy();
+                    state = State.Dawdle;
+                }
+                
+                
             }
         }
+            
+       
 
        
       

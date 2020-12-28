@@ -45,6 +45,9 @@ public class Actor : MonoBehaviour
     public List<Transform> ItemsInProximity = new List<Transform>();
     public List<Transform> ItemsInView = new List<Transform>();
 
+    //conditions
+    protected bool isMoving = false;
+
     public virtual void Begin()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
@@ -114,7 +117,8 @@ public class Actor : MonoBehaviour
         if (velocity.sqrMagnitude > squareMaxSpeed)
         {
             velocity = velocity.normalized * maxSpeed;
-        }        
+        }
+        isMoving = velocity.magnitude > 0;
     
 
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, turnSpeed);
@@ -122,12 +126,13 @@ public class Actor : MonoBehaviour
     }
 
     #region Pathfinding
-
-    public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) // when the path is made starts couritine to follow the path.
+    // when the path is made starts couritine to follow the path.
+    public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) 
     {
 
         if (pathSuccessful)
         {
+            //isMoving = true;
             StopCoroutine(FollowPath());
             path = new Path(waypoints, transform.position,turnDist, stoppingDistance);
             StartCoroutine(FollowPath());
@@ -160,7 +165,8 @@ public class Actor : MonoBehaviour
         }
     }
 
-    //i think somewherer in here is what ids causing the shepard to double speed when the path is interreepted
+    //i think somewherer in here is what ids causing the shepard to double speed when 
+    //the path is interreepted
     IEnumerator FollowPath()
     {
         bool followingPath = true;
@@ -178,6 +184,7 @@ public class Actor : MonoBehaviour
                 if (pathIndex == path.finishLineIndex)
                 {
                     followingPath = false;
+                    //isMoving = false;
                     break;
                 }
                 else
@@ -195,6 +202,7 @@ public class Actor : MonoBehaviour
                     if (speedPercent < 0.01f)
                     {
                         followingPath = false;
+                       // isMoving = false;
                     }
                 }
 

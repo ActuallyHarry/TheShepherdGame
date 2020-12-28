@@ -11,6 +11,8 @@ public class UIShpdAnimal : MonoBehaviour
     float goalHunger; //the value to changeto
     float currentHunger; // the current value
 
+
+
     public Slider hungerBar;
 
 
@@ -24,12 +26,14 @@ public class UIShpdAnimal : MonoBehaviour
 
     public void SetValues(float hunger)
     {
-        goalHunger = hunger;
        
+        goalHunger = hunger;
+
     }
 
     void Update()
     {
+
         
         currentHunger = Mathf.Lerp(currentHunger, goalHunger,0.5f);
         hungerBar.value = currentHunger;
