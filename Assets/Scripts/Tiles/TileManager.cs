@@ -77,6 +77,7 @@ public class TileManager : MonoBehaviour
        
     }
 
+    #region TileUpdates
     public void TileUpdate(Tile focusTile, Tile previousFocusTile)
     {       
     
@@ -117,18 +118,21 @@ public class TileManager : MonoBehaviour
                            
                             break;
                     }
-                    focusTile.tileObject.exits[i].exiting = false;
-                    Destroy(focusTile.tileObject.exits[i]);
+                    //focusTile.tileObject.exits[i].exiting = false;
+                    //destroys the exit script the gameobject remains at the moment because it is used to prevent the sheep from leaving a tile
+                    Destroy(focusTile.tileObject.exits[i]); 
             }
             }
 
             if(previousFocusTile != focusTile)
             {
-                if(previousFocusTile != null)
+                if (previousFocusTile != null)
                 {
+                    tilePop.DePopulateTile(previousFocusTile.tileObject);
                     for (int i = 0; i < previousFocusTile.neighbors.Count; i++)
                     {
                         previousFocusTile.neighbors[i].tileObject.TurnOnColliders(false);
+                        
                     }
                 }
 
@@ -137,28 +141,28 @@ public class TileManager : MonoBehaviour
                 {
                     focusTile.neighbors[i].tileObject.TurnOnColliders(true);
                 }
-
-               
             }
-           
-       
-        
+                
+
+
     }
 
-    void ActivateTiles()
+    public void ActivateTiles()
     {
-        if (activatingTiles.Count > 0)
+        
+        if (activatingTiles.Count>0)
         {
             Tile tile = activatingTiles.Dequeue();
             tile.tileObject.activating = true;
-            tilePop.PopulateTile(tile.tileObject);
+            //tilePop.PopulateTile(tile.tileObject);
             //Debug.Log(activatingTiles.Count);
-        }     
+        }
+          
     }
 
+    #endregion
 
-
-
+    #region MapIntialization
     public void MakeMap()
     {        
         tileMap = mapGen.GenerateMap(mapSize, this);
@@ -202,10 +206,7 @@ public class TileManager : MonoBehaviour
       
     }
 
-    
 
-    public void ActivateTile(Tile t)
-    {
-        activatingTiles.Enqueue(t);
-    }    
+    #endregion
+
 }

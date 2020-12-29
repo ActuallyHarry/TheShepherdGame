@@ -25,6 +25,8 @@ public class TileObject : MonoBehaviour
     [Header("SpawningPoints")]
     public Transform[] foodSpawnLocations;
     public Transform[] entitySpawnLocations;
+
+    public List<Food> food;
     
 
 

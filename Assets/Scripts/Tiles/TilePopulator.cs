@@ -11,16 +11,27 @@ public class TilePopulator : MonoBehaviour
         Transform[] foodSpawnLoc = tileObject.foodSpawnLocations;
         //Transform[] enititySpawnLoc = tileObject.entitySpawnLocations;
 
-        PopulateFood(foodSpawnLoc, foodSpawnLoc.Length); // the second argument will need to be replaced based on the dififuclty metric
+        tileObject.food = PopulateFood(foodSpawnLoc, foodSpawnLoc.Length); // the second argument will need to be replaced based on the dififuclty metric
     }
 
-    void PopulateFood(Transform[] spawnLoc, int numOfFood)
+    List<Food> PopulateFood(Transform[] spawnLoc, int numOfFood)
     {
         int repetitions = Mathf.Min(spawnLoc.Length, numOfFood);//may be better way but good for now
-
+        List<Food> food = new List<Food>();
         for (int i = 0; i < repetitions; i++)
         {
-            Instantiate(foodPrefab, spawnLoc[i]);
+            food.Add(Instantiate(foodPrefab, spawnLoc[i]).GetComponent<Food>());
         }
+        return food;
+    }
+
+    public void DePopulateTile(TileObject tileObject)
+    {
+        List<Food> food = tileObject.food;
+        for (int i = 0; i < food.Count; i++)
+        {
+            food[i].Destroy();
+        }
+        tileObject.food.Clear();
     }
 }

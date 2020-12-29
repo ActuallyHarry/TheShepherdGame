@@ -72,7 +72,7 @@ MonoBehaviour:
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
   speed: 3
   maxSpeed: 5
-  turnSpeed: 3
+  turnSpeed: 0.5
   turnDist: 5
   stoppingDistance: 0.5
   proximityRadius: 1.2

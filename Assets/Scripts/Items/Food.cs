@@ -13,7 +13,7 @@ public class Food : Item
         if (taken)
         {
             timer += Time.deltaTime;
-            if(timer > 5)
+            if(timer > 10)
             {
                 timer = 0;
                 taken = false;

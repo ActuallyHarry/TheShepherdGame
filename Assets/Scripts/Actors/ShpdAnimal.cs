@@ -8,7 +8,8 @@ public class ShpdAnimal : Actor
     Animator anim;
 
     bool shpdWhistled = false;
-    private float hungerPercentage = 100f;   
+    private float hungerPercentage = 100f;
+    public float CurrentHunger { get { return hungerPercentage; } }
     public float hungerDecrease = 10f;
     float eatingTimer =0;
 
@@ -128,7 +129,7 @@ public class ShpdAnimal : Actor
 
     void OnFollowShepard()
     {
-        Debug.Log("Whistle");
+        //Debug.Log("Whistle");
         interest = leader.transform;
         AttentionTimer();
         currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];             
@@ -197,7 +198,7 @@ public class ShpdAnimal : Actor
     public void DecreaseHunger()
     {       
         hungerPercentage -= hungerDecrease;
-        Debug.Log(hungerPercentage);
+        //Debug.Log(hungerPercentage);
     }
 
     void AttentionTimer()

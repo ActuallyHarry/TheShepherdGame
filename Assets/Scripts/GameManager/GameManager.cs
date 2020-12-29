@@ -65,7 +65,8 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;        
+        focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;
+
         tMan.TileUpdate(focusTile, previousFocusTile);
         if (focusTile != previousFocusTile)
         {
@@ -80,10 +81,11 @@ public class GameManager : MonoBehaviour
     //handles the tile loop,eg adjust sheep hunger etc
     void OnNextTile()
     {
+        //tMan.ActivateTiles();
         List<ShpdAnimal> animals = player.animals;
         foreach (ShpdAnimal animal in animals)
         {
-            animal.DecreaseHunger();
+            animal.DecreaseHunger();// th8s may need to be changed to a sheeo centric methoid rsather than player centruc
         }
     }
 

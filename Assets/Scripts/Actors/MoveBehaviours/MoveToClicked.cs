@@ -49,6 +49,8 @@ public class MoveToClicked : MoveBehaviour
 
     public override Quaternion CalculateRotation(Actor actor, Vector3 velocity)
     {
-        return Quaternion.LookRotation(velocity - actor.transform.position);
+
+        Vector3 rot = velocity - actor.transform.position;
+        return rot == Vector3.zero? actor.transform.rotation: Quaternion.LookRotation(rot);
     }
 }

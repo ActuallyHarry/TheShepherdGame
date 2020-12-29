@@ -93,9 +93,6 @@ public class Actor : MonoBehaviour
         
     }
 
-
-
-
     public Transform ReturnCurrentTile()
     {
         RaycastHit hit;

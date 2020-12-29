@@ -10,6 +10,7 @@ public class UIShpdAnimal : MonoBehaviour
 
     float goalHunger; //the value to changeto
     float currentHunger; // the current value
+    
 
 
 
