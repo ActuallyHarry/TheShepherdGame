@@ -15,7 +15,7 @@ public class TileObject : MonoBehaviour
     public float activateTime = 0.5f;
     float t = 0;
     bool active = false;
-    public bool activating = false;
+    public bool rising = false;
 
     [Header("Assets")]
     public GameObject asset; // this is the thing that actually moves
@@ -29,10 +29,10 @@ public class TileObject : MonoBehaviour
     public List<Food> food;
     
 
-
+    // alla this does is make the tile rise
     public void Update()
     {
-        if (activating)
+        if (rising)
         {
             asset.SetActive(true);
             if (t < activateTime)
@@ -45,10 +45,7 @@ public class TileObject : MonoBehaviour
             {
                 asset.transform.position = activePos.position;
                 active = true;
-                activating = false;
-             
-
-
+                rising = false;     
             }
         }
         

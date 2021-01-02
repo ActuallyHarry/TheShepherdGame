@@ -5,26 +5,49 @@ using UnityEngine;
 public class DifficultyModulator : MonoBehaviour
 {
     List<ShpdAnimal> animals;
+    int previousFood = 0;
 
-    private void Initialize(List<ShpdAnimal> a)
+    public void Initialize(List<ShpdAnimal> a)
     {
         animals = a;
     }
 
-
-
-
-    public int NumOfFoodForNextTile(int currentFood)
+    public QuantityData CalcForNewTile()
     {
-        float avgHunger = 0;
+        int foodnum = NumOfFoodForNextTile();
+
+        QuantityData qData= new QuantityData(foodnum);
+        return qData;
+    }
+
+
+    public int NumOfFoodForNextTile()
+    {
+        float n = Random.Range(0, 300)/100f;
+
+        float avgSaturation = 0;
         for (int i = 0; i < animals.Count; i++)
         {
-            avgHunger += animals[i].CurrentHunger;
+            avgSaturation += animals[i].CurrentHunger;
         }
-        avgHunger /= animals.Count*100f;
+        avgSaturation /= animals.Count*100f;
 
-        int foodnum = Mathf.RoundToInt(currentFood * (1 - avgHunger));
-        return foodnum;
+        float foodnum = animals.Count * n *(1.5f - avgSaturation) - 0.5f * previousFood;
+
+        previousFood = Mathf.RoundToInt(foodnum);
+       
+        return previousFood;
+    }
+}
+
+public struct QuantityData
+{
+    public readonly int foodNum;
+    //public readonly int wolfNum;
+
+    public QuantityData(int _foodNum)
+    {
+        foodNum = _foodNum;
     }
 }
 

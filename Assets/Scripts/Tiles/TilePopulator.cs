@@ -5,13 +5,14 @@ using UnityEngine;
 public class TilePopulator : MonoBehaviour
 {
     public GameObject foodPrefab;
-
-    public void PopulateTile(TileObject tileObject) // this should eventually factor in the difficulty settings
+    public void PopulateTile(TileObject tileObject, QuantityData quantity) // this should eventually factor in the difficulty settings
     {
         Transform[] foodSpawnLoc = tileObject.foodSpawnLocations;
         //Transform[] enititySpawnLoc = tileObject.entitySpawnLocations;
 
-        tileObject.food = PopulateFood(foodSpawnLoc, foodSpawnLoc.Length); // the second argument will need to be replaced based on the dififuclty metric
+        int numOfFood = quantity.foodNum;
+        //int nbumOf entity
+        tileObject.food = PopulateFood(foodSpawnLoc, numOfFood); // the second argument will need to be replaced based on the dififuclty metric
     }
 
     List<Food> PopulateFood(Transform[] spawnLoc, int numOfFood)

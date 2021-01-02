@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public CameraController camCon;
     public  TileManager tMan;
     public Grid navGrid;
+    public DifficultyModulator diffMod;
 
     [Header("ActorVars")]  
     public int numOfStartingSheep;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour
         tMan.StartMap();
         SetUpPlayer();
         SetUpHerd();
-
+        diffMod.Initialize(player.animals);
 
     }
     public void SetUpPlayer()
@@ -67,13 +68,11 @@ public class GameManager : MonoBehaviour
     {
         focusTile = player.ReturnCurrentTile().GetComponent<TileObject>().thisTile;
 
-        tMan.TileUpdate(focusTile, previousFocusTile);
+        tMan.TileUpdate(focusTile);
         if (focusTile != previousFocusTile)
-        {
-            if(previousFocusTile != null)
-            {
-                OnNextTile();
-            }            
+        {   
+            //if prevtile not null was here
+            OnNextTile();                      
             previousFocusTile = focusTile;
         }
     }
@@ -81,12 +80,20 @@ public class GameManager : MonoBehaviour
     //handles the tile loop,eg adjust sheep hunger etc
     void OnNextTile()
     {
-        //tMan.ActivateTiles();
-        List<ShpdAnimal> animals = player.animals;
-        foreach (ShpdAnimal animal in animals)
+        QuantityData quantityData = diffMod.CalcForNewTile();
+        tMan.OnNextTile(focusTile, previousFocusTile, quantityData);
+        
+        
+        if(previousFocusTile != null)
         {
-            animal.DecreaseHunger();// th8s may need to be changed to a sheeo centric methoid rsather than player centruc
+
+            List<ShpdAnimal> animals = player.animals;
+            foreach (ShpdAnimal animal in animals)
+            {
+                animal.DecreaseHunger();// th8s may need to be changed to a sheeo centric methoid rsather than player centruc
+            }
         }
+       
     }
 
     

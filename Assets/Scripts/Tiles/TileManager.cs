@@ -78,14 +78,21 @@ public class TileManager : MonoBehaviour
     }
 
     #region TileUpdates
-    public void TileUpdate(Tile focusTile, Tile previousFocusTile)
+    public void TileUpdate(Tile focusTile) //every frame
     {       
     
-        CheckCurrentTile(focusTile, previousFocusTile);
-        ActivateTiles();
+        CheckCurrentTile(focusTile);
+        RiseTiles();
     }
 
-    void CheckCurrentTile(Tile focusTile, Tile previousFocusTile)
+    //everything the tile manager needs to do when sheparhard moves to a new Tile
+    public void OnNextTile(Tile focusTile, Tile previousTile, QuantityData quantity) 
+    {
+        ToggleColliders(focusTile, previousTile);
+        Populate(focusTile,previousTile, quantity);
+    }
+
+    void CheckCurrentTile(Tile focusTile) // everyframe
     {
 
             //checking if player is in an exit;
@@ -124,40 +131,77 @@ public class TileManager : MonoBehaviour
             }
             }
 
-            if(previousFocusTile != focusTile)
-            {
-                if (previousFocusTile != null)
-                {
-                    tilePop.DePopulateTile(previousFocusTile.tileObject);
-                    for (int i = 0; i < previousFocusTile.neighbors.Count; i++)
-                    {
-                        previousFocusTile.neighbors[i].tileObject.TurnOnColliders(false);
-                        
-                    }
-                }
-
-                focusTile.tileObject.TurnOnColliders(true);
-                for (int i = 0; i < focusTile.neighbors.Count; i++)
-                {
-                    focusTile.neighbors[i].tileObject.TurnOnColliders(true);
-                }
-            }
+            //if(previousFocusTile != focusTile)
+            //{
+                
+            //}
                 
 
 
     }
 
-    public void ActivateTiles()
+    void ToggleColliders(Tile focusTile, Tile previousFocusTile)
     {
-        
-        if (activatingTiles.Count>0)
+        if (previousFocusTile != null)
+        {
+            //tilePop.DePopulateTile(previousFocusTile.tileObject);
+            for (int i = 0; i < previousFocusTile.neighbors.Count; i++)
+            {
+                previousFocusTile.neighbors[i].tileObject.TurnOnColliders(false);
+
+            }
+        }
+
+        focusTile.tileObject.TurnOnColliders(true);
+        for (int i = 0; i < focusTile.neighbors.Count; i++)
+        {
+            focusTile.neighbors[i].tileObject.TurnOnColliders(true);
+        }
+    }
+
+    void Populate(Tile focusTile, Tile previousTile, QuantityData quantity)
+    {
+        if(previousTile != null)
+        {
+            for (int i = 0; i < previousTile.neighbors.Count; i++)
+            {
+                if(previousTile.neighbors[i]!= focusTile)
+                {
+                    tilePop.DePopulateTile(previousTile.neighbors[i].tileObject);
+                }
+                
+            }
+
+        }
+
+        for (int i = 0; i < focusTile.neighbors.Count; i++)
+        {
+            if(focusTile.neighbors[i] != previousTile)
+            {
+                tilePop.PopulateTile(focusTile.neighbors[i].tileObject, quantity);
+            }
+            
+        }
+    }
+
+    public void RiseTiles() //every frame
+    {
+        //int n = activatingTiles.Count;
+        //for (int i = 0; i < n; i++)
+        //{
+        //    Tile tile = activatingTiles.Dequeue();
+        //    tile.tileObject.activating = true;
+
+        //}
+
+        if (activatingTiles.Count > 0)
         {
             Tile tile = activatingTiles.Dequeue();
-            tile.tileObject.activating = true;
+            tile.tileObject.rising = true;
             //tilePop.PopulateTile(tile.tileObject);
             //Debug.Log(activatingTiles.Count);
         }
-          
+
     }
 
     #endregion
@@ -202,7 +246,7 @@ public class TileManager : MonoBehaviour
         tileMap[0, 0].tileObject.TurnOnColliders(true);
         tileMap[0, 0].tileObject.gameObject.SetActive(true);
         tileMap[0, 0].tileObject.activateTime = 0;
-        tileMap[0, 0].tileObject.activating = true;
+        tileMap[0, 0].tileObject.rising = true;
       
     }
 

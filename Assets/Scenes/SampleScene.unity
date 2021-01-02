@@ -592,6 +592,7 @@ GameObject:
   - component: {fileID: 1914259814}
   - component: {fileID: 1914259816}
   - component: {fileID: 1914259818}
+  - component: {fileID: 1914259819}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -674,6 +675,7 @@ MonoBehaviour:
   camCon: {fileID: 1590413222}
   tMan: {fileID: 1914259813}
   navGrid: {fileID: 972183763}
+  diffMod: {fileID: 1914259819}
   numOfStartingSheep: 4
   herdPrefab: {fileID: 484409497876164521, guid: 6257b9ecb871ad14aa59737badcfe668,
     type: 3}
@@ -695,3 +697,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodPrefab: {fileID: 8279142495067107465, guid: df04ef1ad9a881d41aefdb487220e87d,
     type: 3}
+--- !u!114 &1914259819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1914259812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f28ac885da99aa941b2fccbead77d350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

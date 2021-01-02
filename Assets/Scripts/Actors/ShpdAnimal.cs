@@ -12,6 +12,7 @@ public class ShpdAnimal : Actor
     public float CurrentHunger { get { return hungerPercentage; } }
     public float hungerDecrease = 10f;
     float eatingTimer =0;
+    bool isEating = false;
 
 
     //order of behaviours in the movebeahviour options for sheep should match the oder of states in this enum
@@ -72,7 +73,7 @@ public class ShpdAnimal : Actor
     void CheckStatus()
     {
         state = State.Dawdle;
-        if (shpdWhistled)
+        if (shpdWhistled && !isEating)
         {
             state = State.FollowShepard;
         }
@@ -170,14 +171,16 @@ public class ShpdAnimal : Actor
             {
                 Food food = interest.GetComponent<Food>();
                 float n = food.nourishementAmount;
-                if(anim.GetBool("isEating") == false)
+                if(isEating == false)
                 {
-                    anim.SetBool("isEating", true);
+                    isEating = true;
+                    anim.SetBool("isEating", isEating);
                 }                 
                 eatingTimer += Time.deltaTime;
                 if(eatingTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
                 {
-                   anim.SetBool("isEating", false);
+                    isEating = false;
+                    anim.SetBool("isEating", isEating);
                     hungerPercentage = Mathf.Min(100, hungerPercentage + n);
                     food.Destroy();
                     state = State.Dawdle;
