@@ -72,8 +72,16 @@ public class Actor : MonoBehaviour
         ItemsInView = detB.GetContext(this, viewRadius);
         moveMode = currentMoveBehaviour.ReturnMoveMode();
         //Debug.Log(currentMoveBehaviour);
-        Vector3 move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
-        Quaternion rot = currentMoveBehaviour.CalculateRotation(this, move);
+        Vector3 move = Vector3.zero;
+        Quaternion rot = transform.rotation;
+        if (ReturnCurrentTile() != null)
+        {
+            move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
+            rot = currentMoveBehaviour.CalculateRotation(this, move);
+        }
+       
+
+        
        
 
         switch (moveMode)

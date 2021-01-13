@@ -676,7 +676,7 @@ MonoBehaviour:
   tMan: {fileID: 1914259813}
   navGrid: {fileID: 972183763}
   diffMod: {fileID: 1914259819}
-  numOfStartingSheep: 4
+  numOfStartingSheep: 2
   herdPrefab: {fileID: 484409497876164521, guid: 6257b9ecb871ad14aa59737badcfe668,
     type: 3}
   playerPrefab: {fileID: 6021120703833030508, guid: 67a42dca4f4b63a408354e3ed1b0fe4c,

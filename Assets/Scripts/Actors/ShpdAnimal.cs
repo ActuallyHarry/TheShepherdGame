@@ -11,8 +11,10 @@ public class ShpdAnimal : Actor
     private float hungerPercentage = 100f;
     public float CurrentHunger { get { return hungerPercentage; } }
     public float hungerDecrease = 10f;
-    float eatingTimer =0;
+    float animationTimer =0;
     bool isEating = false;
+
+    bool isDying = false;
 
 
     //order of behaviours in the movebeahviour options for sheep should match the oder of states in this enum
@@ -21,7 +23,8 @@ public class ShpdAnimal : Actor
         Stop,
         Dawdle,
         FollowShepard,
-        FindFood
+        FindFood,
+        Die
     }
     public State state;
     State prevState;
@@ -65,6 +68,9 @@ public class ShpdAnimal : Actor
             case State.FindFood:
                 OnFindFood();
                 break;
+            case State.Die:
+                OnDeath();
+                break;
         }   
         BUpdate();
     }
@@ -72,6 +78,13 @@ public class ShpdAnimal : Actor
     // checks sheeps statitiscs for the need to change its state
     void CheckStatus()
     {
+
+        if (hungerPercentage < 0)
+        {
+            state = State.Die;
+            return;
+        }
+
         state = State.Dawdle;
         if (shpdWhistled && !isEating)
         {
@@ -105,10 +118,27 @@ public class ShpdAnimal : Actor
             state = prevState;
         }
 
+        
+
         // state = State.Dawdle;
     }
 
     #region StateFunctions
+
+    void OnDeath()
+    {
+        Debug.Log("isDying" + animationTimer.ToString() + anim.GetBool("isDying"));
+        currentMoveBehaviour = moveBehaviourOptions[(int)State.Die];
+        animationTimer += Time.deltaTime;
+        isDying = true;
+        anim.SetBool("isDying", isDying);
+        if (animationTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
+        {
+            isDying = false;
+            Debug.Log("Dead");
+            Destroy(gameObject);
+        }
+    }
     void OnStop()
     {
         AttentionTimer();
@@ -155,11 +185,10 @@ public class ShpdAnimal : Actor
                     food.taken = true;
                     interest = item;
                     currentMoveBehaviour = moveBehaviourOptions[(int)State.FindFood];
-                    eatingTimer = 0;
+                    animationTimer = 0;
                     return;
                     
                 }
-                
             }
             currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard]; // i think this will be best could be dawdle nut this means that the shepard as to lead them to food
            
@@ -176,25 +205,19 @@ public class ShpdAnimal : Actor
                     isEating = true;
                     anim.SetBool("isEating", isEating);
                 }                 
-                eatingTimer += Time.deltaTime;
-                if(eatingTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
+                animationTimer += Time.deltaTime;
+                if(animationTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
                 {
                     isEating = false;
                     anim.SetBool("isEating", isEating);
+                    animationTimer = 0;
                     hungerPercentage = Mathf.Min(100, hungerPercentage + n);
                     food.Destroy();
                     state = State.Dawdle;
-                }
-                
-                
+                } 
             }
-        }
-            
-       
-
-       
-      
-    }
+        } 
+   }
 
     #endregion
 
