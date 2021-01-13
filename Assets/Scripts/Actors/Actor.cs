@@ -8,6 +8,8 @@ public class Actor : MonoBehaviour
     public Transform interest; // for behaviours and focus
     public Actor leader; // example shepard is leader of sheep
     public Vector3 target; // for naviagtion grid. -> must be relataoiviley static postions
+    protected Transform currentTileTransform;
+    protected Transform previousTileTransform; //atm these are for checks for individuals whereas focus tile is for gamemanagement
 
     [HideInInspector]
     public Vector3[] checkPoints;
@@ -67,14 +69,15 @@ public class Actor : MonoBehaviour
  
 
     public void BUpdate()
-    {      
+    {
+        currentTileTransform = ReturnCurrentTile();
         ItemsInProximity = detB.GetContext(this, proximityRadius);
         ItemsInView = detB.GetContext(this, viewRadius);
         moveMode = currentMoveBehaviour.ReturnMoveMode();
         //Debug.Log(currentMoveBehaviour);
         Vector3 move = Vector3.zero;
         Quaternion rot = transform.rotation;
-        if (ReturnCurrentTile() != null)
+        if (currentTileTransform != null)
         {
             move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
             rot = currentMoveBehaviour.CalculateRotation(this, move);

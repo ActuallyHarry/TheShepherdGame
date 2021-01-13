@@ -84,15 +84,15 @@ public class GameManager : MonoBehaviour
         tMan.OnNextTile(focusTile, previousFocusTile, quantityData);
         
         
-        if(previousFocusTile != null)
-        {
+        //if(previousFocusTile != null)
+        //{
 
-            List<ShpdAnimal> animals = player.animals;
-            foreach (ShpdAnimal animal in animals)
-            {
-                animal.DecreaseHunger();// th8s may need to be changed to a sheeo centric methoid rsather than player centruc
-            }
-        }
+        //    List<ShpdAnimal> animals = player.animals;
+        //    foreach (ShpdAnimal animal in animals)
+        //    {
+        //        animal.DecreaseHunger();// th8s may need to be changed to a sheeo centric methoid rsather than player centruc
+        //    }
+        //}
        
     }
 

@@ -51,7 +51,9 @@ public class ShpdAnimal : Actor
         anim.SetBool("isMoving", isMoving);
         ui.SetValues(hungerPercentage);
         ui.StateDebugging(state, System.Array.IndexOf(moveBehaviourOptions, currentMoveBehaviour));
+        CheckStatistics();
         CheckStatus();
+        
       
         //Debug.Log(target);
         switch (state)
@@ -75,6 +77,7 @@ public class ShpdAnimal : Actor
         BUpdate();
     }
 
+    #region StatusCheck
     // checks sheeps statitiscs for the need to change its state
     void CheckStatus()
     {
@@ -122,6 +125,20 @@ public class ShpdAnimal : Actor
 
         // state = State.Dawdle;
     }
+
+    //updates the statics suchas hunger health etc
+    void CheckStatistics()
+    {
+        if(previousTileTransform != currentTileTransform)
+        {
+            if (previousTileTransform != null)
+            {                
+              DecreaseHunger();                
+            }
+            previousTileTransform = currentTileTransform;
+        }
+    }
+    #endregion
 
     #region StateFunctions
 
