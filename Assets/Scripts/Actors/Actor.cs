@@ -177,6 +177,7 @@ public class Actor : MonoBehaviour
     //the path is interreepted
     IEnumerator FollowPath()
     {
+        isMoving = true;
         bool followingPath = true;
         int pathIndex = 0;
 
@@ -192,6 +193,7 @@ public class Actor : MonoBehaviour
                 if (pathIndex == path.finishLineIndex)
                 {
                     followingPath = false;
+                    isMoving = false;
                     //isMoving = false;
                     break;
                 }
@@ -210,6 +212,7 @@ public class Actor : MonoBehaviour
                     if (speedPercent < 0.01f)
                     {
                         followingPath = false;
+                        isMoving = false;
                        // isMoving = false;
                     }
                 }

@@ -5,9 +5,12 @@ using UnityEngine.AI;
 
 public class Shepard : Actor
 {
+    public Animator anim;
+
     public List<ShpdAnimal> animals = new List<ShpdAnimal>();
     bool whistleButtonDown;
-    bool whistled = false;
+    bool isWhistling= false; // for animation duration
+    bool whistled = false; //for toggling whistle
     float whistleTimer;
     public float whistleTime = 5; // time that whistle will be togglable until reset;
 
@@ -22,14 +25,25 @@ public class Shepard : Actor
         whistleButtonDown = Input.GetMouseButtonUp(1);
         UpdateAnimals();
         WTimer();
-  
+        anim.SetBool("isMoving", isMoving);
     }
 
     void WTimer()
     {
         whistleTimer += Time.deltaTime;
+
+        if (isWhistling)
+        {
+            if (whistleTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
+            {
+                isWhistling = false;
+                anim.SetBool("isWhistling", isWhistling);
+            }
+        }       
         if(whistleTimer > whistleTime)
         {
+            isWhistling = false;
+            anim.SetBool("isWhistling",isWhistling);
             whistled = false;
         }
     }
@@ -38,6 +52,8 @@ public class Shepard : Actor
     {
         if (whistleButtonDown)
         {
+            isWhistling = !whistled;
+            anim.SetBool("isWhistling", isWhistling);
             whistleTimer = 0;            
             foreach (ShpdAnimal a in animals)
             {
