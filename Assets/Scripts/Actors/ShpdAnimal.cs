@@ -9,8 +9,10 @@ public class ShpdAnimal : Actor
 
     bool shpdWhistled = false;
     private float hungerPercentage = 100f;
-    public float CurrentHunger { get { return hungerPercentage; } }
+        
+    [Header("Shepherd Animal")]
     public float hungerDecrease = 10f;
+    public float CurrentHunger { get { return hungerPercentage; } }
     float animationTimer =0;
     bool isEating = false;
 
@@ -53,7 +55,8 @@ public class ShpdAnimal : Actor
         ui.StateDebugging(state, System.Array.IndexOf(moveBehaviourOptions, currentMoveBehaviour));
         CheckStatistics();
         CheckStatus();
-        
+
+        //Debug.Log(move);
       
         //Debug.Log(target);
         switch (state)
@@ -91,39 +94,40 @@ public class ShpdAnimal : Actor
         state = State.Dawdle;
         if (shpdWhistled && !isEating)
         {
+            prevState = state;
             state = State.FollowShepard;
         }
 
-        if(hungerPercentage < 100 && state != State.FollowShepard)
+        if (hungerPercentage < 100 && state != State.FollowShepard)
         {
-            if(ContextFilter.FilterContext(ItemsInView, "Plant").Count != 0)
+            if (ContextFilter.FilterContext(ItemsInView, "Plant").Count != 0)
             {
                 prevState = state;
                 state = State.FindFood;
                 return;
             }
-            
-        }
-        
 
-        if (ItemsInProximity.Contains(interest) && (state == State.FollowShepard || state == State.Stop))
-        {
-            prevState = state;
-            state = State.Stop;
-            return;
-        }
-        else if (state == State.Stop)
-        {
-            if(prevState == State.Stop)
-            {
-                state = State.Dawdle;
-            }
-            state = prevState;
         }
 
-        
 
-        // state = State.Dawdle;
+        //if (ItemsInProximity.Contains(interest) && (state == State.FollowShepard || state == State.Stop))
+        //{
+        //    prevState = state;
+        //    state = State.Stop;
+        //    return;
+        //}
+        //else if (state == State.Stop)
+        //{
+        //    if (prevState == State.Stop)
+        //    {
+        //        state = State.Dawdle;
+        //    }
+        //    state = prevState;
+        //}
+
+
+
+
     }
 
     //updates the statics suchas hunger health etc
@@ -144,7 +148,7 @@ public class ShpdAnimal : Actor
 
     void OnDeath()
     {
-        Debug.Log("isDying" + animationTimer.ToString() + anim.GetBool("isDying"));
+        //Debug.Log("isDying" + animationTimer.ToString() + anim.GetBool("isDying"));
         currentMoveBehaviour = moveBehaviourOptions[(int)State.Die];
         animationTimer += Time.deltaTime;
         isDying = true;
@@ -180,7 +184,14 @@ public class ShpdAnimal : Actor
         //Debug.Log("Whistle");
         interest = leader.transform;
         AttentionTimer();
-        currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];             
+        if (!ItemsInProximity.Contains(interest))
+        {
+            currentMoveBehaviour = moveBehaviourOptions[(int)State.FollowShepard];
+        }
+        else
+        {
+            currentMoveBehaviour = moveBehaviourOptions[(int)State.Stop];
+        }
     }
 
    void OnFindFood()
@@ -215,15 +226,17 @@ public class ShpdAnimal : Actor
         {
             if (ItemsInProximity.Contains(interest))              
             {
+                
                 Food food = interest.GetComponent<Food>();
                 float n = food.nourishementAmount;
                 if(isEating == false)
                 {
                     isEating = true;
                     anim.SetBool("isEating", isEating);
-                }                 
+                }
+                currentMoveBehaviour = moveBehaviourOptions[(int)State.Stop];
                 animationTimer += Time.deltaTime;
-                if(animationTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
+                if (animationTimer > anim.GetCurrentAnimatorStateInfo(0).normalizedTime + anim.GetCurrentAnimatorStateInfo(0).length)
                 {
                     isEating = false;
                     anim.SetBool("isEating", isEating);
@@ -231,7 +244,7 @@ public class ShpdAnimal : Actor
                     hungerPercentage = Mathf.Min(100, hungerPercentage + n);
                     food.Destroy();
                     state = State.Dawdle;
-                } 
+                }
             }
         } 
    }

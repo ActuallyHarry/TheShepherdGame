@@ -9,6 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f432dd9c40ae7f4495066e0a466d0a8, type: 3}
-  m_Name: MoveToShepard
+  m_Script: {fileID: 11500000, guid: 015cdfe0a4a461e4183ab038fa109a6e, type: 3}
+  m_Name: MoveToLeftCLick
   m_EditorClassIdentifier: 
+  clickable:
+    serializedVersion: 2
+    m_Bits: 256
+  lastClickedLocation: {x: -160, y: 0, z: -160}
+  click: 0

@@ -8,9 +8,10 @@ public class UnConformMove : MoveBehaviour
     Vector3 currentVelocity;
     public float agentSmoothTime = 0.5f;
 
-    public override Vector3 CalculateMove(Actor actor, List<Transform> prosimal, List<Transform> view)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view, Vector3 currentVelocity)
     {
-        Vector3 velocity = Vector3.zero;
+        Vector3 velocity = currentVelocity; //not sure if this is the best for all behavious
+ 
         if(view.Count == 0)
         {
             return velocity;

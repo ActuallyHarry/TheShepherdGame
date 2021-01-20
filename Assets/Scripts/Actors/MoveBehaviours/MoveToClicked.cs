@@ -20,7 +20,7 @@ public class MoveToClicked : MoveBehaviour
 
  
 
-    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view, Vector3 currentVelocity)
     {
         if (Input.GetMouseButtonUp((int)click))
         {

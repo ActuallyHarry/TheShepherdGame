@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    //protected Vector3 move = Vector3.zero;
+
     public Transform interest; // for behaviours and focus
     public Actor leader; // example shepard is leader of sheep
     public Vector3 target; // for naviagtion grid. -> must be relataoiviley static postions
@@ -13,6 +15,11 @@ public class Actor : MonoBehaviour
 
     [HideInInspector]
     public Vector3[] checkPoints;
+    [HideInInspector]
+    Vector3 currentVelocity = Vector3.forward;
+    Quaternion currentRotation = Quaternion.identity;
+    [Range(0,360)]
+    public float angleRotationThreshold = 20;
 
     public enum MoveMode
     {
@@ -29,8 +36,6 @@ public class Actor : MonoBehaviour
 
     [Header("Navigation")]
     public float speed = 7;
-    public float maxSpeed = 10;
-    float squareMaxSpeed;
     const float minPathUpdateTime = 0.2f;
     const float pathUpdateMovethreshold = 0.5f;    
     public float turnSpeed = 3;
@@ -52,7 +57,6 @@ public class Actor : MonoBehaviour
 
     public virtual void Begin()
     {
-        squareMaxSpeed = maxSpeed * maxSpeed;
         SquareAvoidanceRadius = avoidanceRadius * avoidanceRadius;
         currentMoveBehaviour.ResetValues(this);
 
@@ -77,13 +81,19 @@ public class Actor : MonoBehaviour
         //Debug.Log(currentMoveBehaviour);
         Vector3 move = Vector3.zero;
         Quaternion rot = transform.rotation;
+        //Vector3 rot = transform.rotation.eulerAngles;
         if (currentTileTransform != null)
         {
-            move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView);
+            move = currentMoveBehaviour.CalculateMove(this, ItemsInProximity, ItemsInView, currentVelocity);
             rot = currentMoveBehaviour.CalculateRotation(this, move);
-        }
-       
 
+            if(Quaternion.Angle(rot,currentRotation) > angleRotationThreshold)
+            {
+                currentRotation = rot;
+            }
+        }
+
+        currentVelocity = move;
         
        
 
@@ -93,7 +103,7 @@ public class Actor : MonoBehaviour
                 target = move; //here move must be a postion
                 break;
             case MoveMode.Behaviour:
-                Move(move,rot); //here move is required to be a velocity
+                Move(currentVelocity,currentRotation); //here move is required to be a velocity                
                 break;
 
         }
@@ -120,16 +130,15 @@ public class Actor : MonoBehaviour
     }
 
     //for behaviours
-    private void Move(Vector3 velocity, Quaternion rotation)
+    private void Move(Vector3 velocity, Quaternion rotation)    
     {
-        if (velocity.sqrMagnitude > squareMaxSpeed)
-        {
-            velocity = velocity.normalized * maxSpeed;
-        }
-        isMoving = velocity.magnitude > 0;
-    
+        velocity = velocity.normalized * speed;
+        
+        isMoving = velocity.magnitude > 0.01f;
+
 
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, turnSpeed);
+        //transform.LookAt(lookAt);
         transform.position += velocity * Time.deltaTime;
     }
 

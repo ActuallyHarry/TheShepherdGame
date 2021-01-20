@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 015cdfe0a4a461e4183ab038fa109a6e, type: 3}
-  m_Name: MoveToLeftCLick
+  m_Script: {fileID: 11500000, guid: 45eca2a871e1eaa46b3ab7b5efa42d02, type: 3}
+  m_Name: StalkingComposite
   m_EditorClassIdentifier: 
-  clickable:
-    serializedVersion: 2
-    m_Bits: 256
-  lastClickedLocation: {x: 17.052015, y: 0, z: 1.6215324}
-  click: 0
+  behaviours:
+  - {fileID: 11400000, guid: c9082a662600456469d20808a95f1955, type: 2}
+  weights:
+  - 2

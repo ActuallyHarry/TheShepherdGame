@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public Shepard player;
 
     [Header("Data")]
-    public int numOfPoints = 10;
+    public int numOfPoints = 72;
     Vector3[] pointsInCircle;
     Tile focusTile;
     Tile previousFocusTile;

@@ -8,7 +8,7 @@ public class MoveToShepard : MoveBehaviour
     Vector3 currentVelocity;
     public float agentSmoothTime = 0.5f;
 
-    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view)
+    public override Vector3 CalculateMove(Actor actor, List<Transform> proximal, List<Transform> view, Vector3 currentVelocity)
     {
         Vector3 velocity = actor.leader.transform.position - actor.transform.position;
         velocity = velocity.normalized;

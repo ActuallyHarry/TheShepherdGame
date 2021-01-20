@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: DawdleComposite
   m_EditorClassIdentifier: 
   behaviours:
-  - {fileID: 11400000, guid: bcf5f84f57eef3145968ffee7b616d78, type: 2}
-  - {fileID: 11400000, guid: 6d28188a1b0b3c841904f717e540cd1f, type: 2}
-  - {fileID: 11400000, guid: ba22a03bdc9fa6f4a9a83e0695731042, type: 2}
   - {fileID: 11400000, guid: beb4ff5513f0bb34ab14fa7af1b48b5f, type: 2}
+  - {fileID: 11400000, guid: ba22a03bdc9fa6f4a9a83e0695731042, type: 2}
+  - {fileID: 11400000, guid: 6d28188a1b0b3c841904f717e540cd1f, type: 2}
+  - {fileID: 11400000, guid: bcf5f84f57eef3145968ffee7b616d78, type: 2}
   weights:
-  - 0.5
-  - 8
-  - 50
-  - 8
+  - 1
+  - 1
+  - 1
+  - 1

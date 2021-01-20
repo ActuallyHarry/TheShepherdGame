@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4424503440698677027}
   m_Layer: 0
   m_Name: Sheep
-  m_TagString: Untagged
+  m_TagString: ShpdAnimal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,11 +64,12 @@ MonoBehaviour:
   leader: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   checkPoints: []
+  currentVelocity: {x: 0, y: 0, z: 0}
   moveBehaviourOptions:
   - {fileID: 11400000, guid: fc18c01b4f1f46342b253f45b223a021, type: 2}
   - {fileID: 11400000, guid: de59ebbf5b3641a4dabc385593ae5c7c, type: 2}
   - {fileID: 11400000, guid: b55e18b367bcac34284665c969a08039, type: 2}
-  - {fileID: 11400000, guid: c3cfc52d8d1c1154c9bacfcf7d50e9d3, type: 2}
+  - {fileID: 11400000, guid: fe663484226c984479e0dada1d08e492, type: 2}
   - {fileID: 11400000, guid: fc18c01b4f1f46342b253f45b223a021, type: 2}
   detB: {fileID: 11400000, guid: 6d86543dd6ab95444bd38588abebc363, type: 2}
   speed: 3
@@ -316,6 +317,25 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!95 &3873172270614629893
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2551077708577819460}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 362196552ffb3fd449067d9435c54d02, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3097098787642768951
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,25 +689,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!95 &3873172270614629893
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2551077708577819460}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 362196552ffb3fd449067d9435c54d02, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!95 &706301989809241824
 Animator:
   serializedVersion: 3
@@ -788,6 +789,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SheepAnimated
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 75fa85c18592d244dafdf1d5b59690b8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75fa85c18592d244dafdf1d5b59690b8, type: 3}
